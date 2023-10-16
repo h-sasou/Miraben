@@ -1,8 +1,14 @@
 ﻿<!DOCTYPE html>
+<html>
+ <head>
+	 <meta charset="utf-8" />
+ 	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  	 <script src="DB_sql.js"></script>
+  	 <script type="text/javascript" src="GamenSeni.js"></script>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
+ </head>
+   
+ <body>
            <h2>
             みら弁--メニュー--
             <input type="button" value="マイページ"onclick="RoadMypage()">
@@ -10,7 +16,7 @@
             <input type="button" value="商品受け取り"onclick="">
            </h2>
 
-    <body>
+
         <p>
             11時45分以降は注文はできません
             <input type="search" id="search">
@@ -40,6 +46,11 @@
                 <tr>
                 </tr>
             </table>
-            <script type="text/javascript" src="GamenSeni.js"></script>
-</body>
+            
+ </body>
+ 
+ <script>
+  let a = DB.sql("select * from tm_shop_mng;");
+   console.log( a )
+ </script>
 </html>
