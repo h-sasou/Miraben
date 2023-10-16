@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
  <head>
 	 <meta charset="utf-8" />
@@ -20,11 +20,14 @@
         <p>
             11時45分以降は注文はできません
             <input type="search" id="search">
-            <br>
 
-            <input type="button" value="左">
-            <inputid="btn"type="button" value="お店" onclick="RoadShop()">
-            <input type="button" value="右">
+            <br>
+                <input id="left_btn" type="button" value="左">
+                <div id="btn">
+                    <!--ここに店のボタンが追加される-->
+                </div>
+                <!--<input id="btn"type="button" value="お店" onclick="RoadShop()">-->
+                <input id="rigtt_btn" type="button" value="右">
             <br>
 
             店の詳細
@@ -39,18 +42,29 @@
  </body>
  <script>
 
-  let countN = DB.sql("select count(*) as count from tm_shop_mng;");
-  
-   let div1 = document.getElementById("btn")
-   
-  for(i = 0 ; i < countN [0]["count"]; i++){
+    let count = 0;
 
-  		const newBtn = document.createElement("button");
+    let name = DB.sql("select * from tm_shop_mng;");
+
+    for(i = 0 ; i < name.length; i++){
+        $("#btn").append('<button id="shop_btn'+i+'" class="shop_btn">'+name[i]["ShopName"]+'</button>');
+        if(i!=0){
+            $("#shop_btn"+i).hide();
+        };
     }
- 
-  $("#ShopName").text( a[0]["ShopName"] );
-  $("#ShopJs").text( a[0]["ShopKen","ShopShi","ShopTyo","ShopBill"] );
-  $("#ShopNun").text( a[0]["TelNum"] );
-   console.log( a )
+
+    $("#left_btn").on("click",function(){
+        
+
+
+    })
+
+    $("#right_btn").on("click",function(){
+
+
+
+    })
+
+  
  </script>
 </html>
