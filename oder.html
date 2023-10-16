@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文選択</title>
+    <h2>みら弁--注文選択--</h2>
+    
+</head>
+<body>
+    
+    <label>店名</label>
+    <input type="button" value="カート確認"onclick="RoadCart()">
+    <div class="area">
+
+        <!--グランドメニュー-->
+        <input type="radio" name="tab_name" id="tab1" checked>
+        <label class="tab_class" for="tab1">グランドメニュー</label>
+        <div class="content_class">
+            <p>DBの料理数分ボタンを配置</p>
+        </div>
+
+        <!--サイドメニュー-->
+        <input type="radio" name="tab_name" id="tab2">
+        <label class="tab_class" for="tab2">サイドメニュー</label>
+        <div class="content_class">
+            <p>DBの料理数分ボタンを配置</p>
+        </div>
+
+        <!--デザート-->
+        <input type="radio" name="tab_name" id="tab3">
+        <label class="tab_class" for="tab3">デザート</label>
+        <div class="content_class">
+            <p>DBの料理数分ボタンを配置</p>
+        </div>
+
+        <!--トッピング-->
+        <input type="radio" name="tab_name" id="tab4">
+        <label class="tab_class" for="tab4">トッピング</label>
+        <div class="content_class">
+            <p>DBの料理数分ボタンを配置</p>
+        </div>
+
+    </div>
+
+    <input type="button" value="戻る" onclick="RoadMenu()">
+    <script type="text/javascript" src="GamenSeni.js"></script>
+</body>
+
+<!--CSS-->
+<style>
+
+.area {
+  width: 500px;
+  margin: auto;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.tab_class {
+  width: calc(100%/4);
+  height: 50px;
+  background-color: darkgrey;
+  line-height: 50px;
+  font-size: 15px;
+  text-align: center;
+  display: block;
+  float: left;
+  order: -1;
+}
+ 
+input[name="tab_name"] {
+  display: none;
+}
+ 
+input:checked + .tab_class {
+  background-color: cadetblue;
+  color: aliceblue;
+}
+ 
+.content_class {
+  display: none;
+  width: 100%;
+}
+ 
+input:checked + .tab_class + .content_class {
+  display: block;
+}
+</style>
+</html>

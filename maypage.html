@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>マイページ：過去の食費</title>
+    <h2>みら弁--マイページ--</h2>
+    <style>
+        .area {
+            width: 500px;
+            margin: auto;
+            flex-wrap: wrap;
+            display: flex;
+        }
+
+        .tab_class {
+            width: calc(100% / 4);
+            height: 50px;
+            background-color: darkgrey;
+            line-height: 50px;
+            font-size: 15px;
+            text-align: center;
+            display: block;
+            float: left;
+            order: -1;
+        }
+
+        input[name="tab_name"] {
+            display: none;
+        }
+
+        input:checked + .tab_class {
+            background-color: #460e44;
+            color: #fabf14;
+        }
+
+        .content_class {
+            display: none;
+            width: 100%;
+        }
+
+        input:checked + .tab_class + .content_class {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="area">
+
+        <!--最近の注文履歴-->
+        <input type="radio" name="tab_name" id="tab1" checked>
+        <label class="tab_class" for="tab1">最近の注文履歴</label>
+        <div class="content_class">
+            <!--テーブル-->
+            <table border="1">
+                <tr>
+                    <th>日時</th>
+                    <th>店名</th>
+                    <th>料理名</th>
+                    <th>個数</th>
+                    <th>金額</th>
+                </tr>
+                <tr>
+                    <td>仮</td>
+                    <td>仮</td>
+                    <td>仮</td>
+                    <td>仮</td>
+                    <td>さんびゃくまん</td>
+                </tr>
+                <!-- 追加の注文履歴があればここに追加 -->
+            </table>
+        </div>
+
+        <!--過去の食費-->
+        <input type="radio" name="tab_name" id="tab2">
+        <label class="tab_class" for="tab2">過去の食費</label>
+        <div class="content_class">
+            <label>
+                ６か月の食費推移
+                今月の内訳
+            </label>
+
+            <!--テーブル-->
+            <table border="2">
+                <tr>
+                    <th>店名</th>
+                    <th>金額</th>
+                </tr>
+                <tr>
+                    <td>仮</td>
+                    <td>さんびゃくまん</td>
+                </tr>
+                <!-- 追加の食費データがあればここに追加 -->
+            </table>
+            <!--普通のやつ-->
+            <label>
+                今月の食費合計
+                <input type="text">
+            </label>
+        </div>
+
+        <!--カロリー-->
+        <input type="radio" name="tab_name" id="tab3">
+        <label class="tab_class" for="tab3">カロリー</label>
+        <div class="content_class">
+            <label>
+                摂取カロリー頻度
+                内訳
+            </label>
+            <table border="2">
+                <tr>
+                    <th>高カロリー</th>
+                    <th>中カロリー</th>
+                    <th>低カロリー</th>
+                </tr>
+                <tr>
+                    <td>仮</td>
+                    <td>さんびゃくまん</td>
+                    <td>仮</td>
+                </tr>
+                <!-- 追加のカロリーデータがあればここに追加 -->
+            </table>
+            <!--普通のやつ-->
+            <label>
+                今月のコメント
+                <input type="text">
+            </label>
+        </div>
+
+        <!--コメント-->
+        <input type="radio" name="tab_name" id="tab4">
+        <label class="tab_class" for="tab4">コメント</label>
+        <div class="content_class">
+            <h3>あなたのコメント</h3>
+            <label>店名　カテゴリー　料理名</label><br>
+            <select></select>
+            <select></select>
+            <select></select><br>
+            <input type="text" id="comment"><br>
+            <input type="button" value="送信">
+        </div>
+    </div>
+    <input type="button" value="戻る" onclick="RoadMenu()">
+    <script type="text/javascript" src="GamenSeni.js"></script>
+</body>
+</html>
