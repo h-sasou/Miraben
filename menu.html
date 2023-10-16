@@ -23,34 +23,34 @@
             <br>
 
             <input type="button" value="左">
-            <input type="button" value="お店" onclick="RoadShop()">
+            <inputid="btn"type="button" value="お店" onclick="RoadShop()">
             <input type="button" value="右">
             <br>
 
             店の詳細
-            <table border="1">
-                <tr>
-                    <th>店名</th>
-                    <th>住所</th>
-                    <th>電話番号</th>
-                    <th>営業時間</th>
-                    <th>定休日</th>
-                </tr>
-                <tr>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
-                </tr>
-                <tr>
-                </tr>
+            <table width="50%" order="1">
+                <tr><th>店名</th><td id="ShopName"></td></tr>
+                <tr><th>住所</th><td id="ShopJs"></td></tr>
+                <tr><th>電話番号</th><td id="ShopNun"></td></tr>
+                <tr><th>営業時間</th><td id="ShopTime"></td></tr>
+                <tr><th>定休日</th><td id="ShopDay"></td></tr>
             </table>
             
  </body>
- 
  <script>
-  let a = DB.sql("select * from tm_shop_mng;");
+
+  let countN = DB.sql("select count(*) as count from tm_shop_mng;");
+  
+   let div1 = document.getElementById("btn")
+   
+  for(i = 0 ; i < countN [0]["count"]; i++){
+
+  		const newBtn = document.createElement("button");
+    }
+ 
+  $("#ShopName").text( a[0]["ShopName"] );
+  $("#ShopJs").text( a[0]["ShopKen","ShopShi","ShopTyo","ShopBill"] );
+  $("#ShopNun").text( a[0]["TelNum"] );
    console.log( a )
  </script>
 </html>
