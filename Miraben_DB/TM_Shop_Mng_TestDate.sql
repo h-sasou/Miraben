@@ -1,16 +1,16 @@
-drop procedure test02;
+drop procedure CallMenu;
 
 DELIMITER //
-CREATE PROCEDURE test02(IN input int)
+CREATE PROCEDURE CallMenu(IN input int)
 BEGIN
 
-select ShopName FROM TM_Shop_mng WHERE ShopID = input;
+select * FROM TM_Shop_mng WHERE ShopID = input;
 
 END;
+
 //
 
 DELIMITER ;
-
 
 INSERT INTO TM_Shop_mng (ShopName, ShopKen, ShopShi, ShopTyo, ShopBill, Mon, Tue, Wed, Thu, Fri, Sat, Sun, Hol, TelNum, EigyouStart, EigyouEnd, DeleteFlg) 
 VALUES ('シン・ラーメンショップ', '埼玉県', '伊那市六道', '3-5-4', '', '1', '1', '0', '1', '1', '0', '1', '0', '0486332451', '11:00', '21:00', '0');
