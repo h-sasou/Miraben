@@ -1,3 +1,17 @@
+drop procedure CallFood;
+
+DELIMITER //
+CREATE PROCEDURE CallFood(IN input int)
+BEGIN
+
+select * FROM TM_Food WHERE ShopID = input;
+
+END;
+
+
+
+
+
 Drop Table If Exists TM_Food;
 
 Create Table
