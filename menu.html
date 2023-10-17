@@ -23,18 +23,19 @@
             <input type="button" value="検索" id="search_btn"><br>
 
 
-            <input id="left_btn" type="button" value="左">
-            <div id="btn"><!--ここに店のボタンが追加される--></div>
+            <input id="left_btn" type="button" value="左" >
+            <button id="btn" onclick="RoadShop()"></button>
             <input id="right_btn" type="button" value="右">
            
 
             店の詳細
-            <table width="80%" order="1">
+            <table width="70%" order="1">
                 <tr><th>店名</th>           <td id="Shop"><!--ここに店名が追加される--></td></tr> 
                 <tr><th>住所</th>           <td id="Js"><!--ここに住所が追加される--></td></tr>  
                 <tr><th>電話番号</th>       <td id="Nun"><!--ここに電話番号が追加される--></td></tr>  
                 <tr><th>営業時間</th>       <td id="Time"><!--ここに営業時間が追加される--></td></tr>   
-                <tr><th>定休日</th>         <td id="Mon">月</td><td id="Tue">火</td><td id="Wed">水</td><td id="Thu">木</td><td id="">金</td></tr>   
+                <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>   
+
             </table>
             
  </body>
@@ -45,9 +46,108 @@
     let name = DB.sql("select * from tm_shop_mng;");
 
 
-    $("#btn").text('<button>'+name[count]["ShopName"]+'</button>');
+    $("#btn").text(name[0]["ShopName"]);
 
-    //for(a = 0 ; a < name.length; a++){
+    $("#Shop").text(name[0]["ShopName"]);
+   
+    $("#Js").text(name[0]["ShopKen"]+name[0]["ShopShi"]+name[0]["ShopTyo"]+name[0]["ShopBill"]);
+
+    $("#Nun").text(name[0]["TelNum"]);
+
+    $("#Time").text(name[0]["EigyouStart"]+'~'+name[0]["EigyouEnd"]);
+
+    youbi(0);
+
+    $("#left_btn").prop('disabled',true);
+ 
+    $("#left_btn").on("click",function(){
+
+    
+            if(count == 0){
+                $("#left_btn").prop('disabled',true);
+            }else{
+                $("#right_btn").prop('disabled',false);
+                count--;
+                $("#btn").text(name[count]["ShopName"]);
+                $("#Shop").text(name[count]["ShopName"]);
+                $("#Js").text(name[count]["ShopKen"]+name[count]["ShopShi"]+name[count]["ShopTyo"]+name[count]["ShopBill"]);
+                $("#Nun").text(name[count]["TelNum"]);
+                $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
+                youbi(count);
+              
+            };
+    });  
+
+    $("#right_btn").on("click",function(){
+        
+            if(count == name.length){
+                $("#right_btn").prop('disabled',true);
+            }else{
+                $("#left_btn").prop('disabled',false);
+                count++;
+                $("#btn").text(name[count]["ShopName"]);
+                $("#Shop").text(name[count]["ShopName"]);
+                $("#Js").text(name[count]["ShopKen"]+name[count]["ShopShi"]+name[count]["ShopTyo"]+name[count]["ShopBill"]);
+                $("#Nun").text(name[count]["TelNum"]);
+                $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
+                youbi(count);
+            }
+    });   
+
+//検索
+
+let kennsaku =DB.sql("select * from tm_shop_mng like ")
+
+
+
+//-------------------------------------------------ここからfunction--------------------------------------------------
+
+        function  youbi(count){
+        
+            $("#Mon").show();
+            $("#Tue").show();
+            $("#Wed").show();
+            $("#Thu").show();
+            $("#Fri").show();
+            $("#Sat").show();
+            $("#Sun").show();
+            $("#Hol").show();
+
+        if(name[count]["Mon"] == 1){
+            $("#Mon").hide();
+        }
+
+        if(name[count]["Tue"] == 1){
+            $("#Tue").hide();
+        }
+
+        if(name[count]["Wed"] == 1){
+            $("#Wed").hide();
+        }
+
+        if(name[count]["Thu"] == 1){
+            $("#Thu").hide();
+        }
+
+        if(name[count]["Fri"] == 1){
+            $("#Fri").hide();
+        }
+
+        if(name[count]["Sat"] == 1){
+            $("#Sat").hide();
+        }
+
+        if(name[count]["Sun"] == 1){
+            $("#Sun").hide();
+        }
+
+        if(name[count]["Hol"] == 1){
+            $("#Hol").hide();
+        }  
+    
+    }
+
+     //for(a = 0 ; a < name.length; a++){
        // $("#btn").append('<button id="shop_btn'+a+'" class="shop_btn" onclick="RoadShop()">'+name[a]["ShopName"]+'</button>');    //店ボタンの生成
 
        // if(name[a]["ShopName"] == null){
@@ -58,120 +158,34 @@
           //  $("#shop_btn"+a).hide();
         //}
    // }
-
-    for(b = 0 ; b < name.length; b++){
-        $("#Shop").append('<td id="Shop_N'+b+'" class="syousai">'+ name[b]["ShopName"]+'</td>');    //テーブル内の店名生成
-        if(b!=0){
-            $("#Shop_N"+b).hide();
-        }
-    }
-
-    for(c = 0 ; c < name.length; c++){
-        $("#Js").append('<td id="Shop_Js'+c+'" class="syousai">'+ name[c]["ShopKen"]+name[c]["ShopShi"]+name[c]["ShopTyo"]+name[c]["ShopBill"]+'</td>');  //テーブル内の住所生成
-        if(c!=0){
-            $("#Shop_Js"+c).hide();
-        }
-    }
-
-    for(d = 0 ; d < name.length; d++){
-        $("#Nun").append('<td id="Shop_Nun'+d+'" class="syousai">'+ name[d]["TelNum"]+'</td>');   //テーブル内の電話番号生成
-        if(d!=0){
-            $("#Shop_Nun"+d).hide();
-        }
-    }
-
-    for(e = 0 ; e < name.length; e++){
-        $("#Time").append('<td id="Shop_Time'+e+'" class="syousai">'+ name[e]["EigyouStart"]+'~'+name[e]["EigyouEnd"]+'</td>');  //テーブル内の営業時間
-        if(e!=0){
-            $("#Shop_Time"+e).hide();
-        }
-    }
-
-
-
-
-        $("#left_btn").on("click",function(){
-            if(count == 0){
-                $("#left_btn").prop('disabled',true);
-            }else{
-                $("#right_btn").prop('disables',false);
-                //$("#shop_btn"+count).hide();  
-                $("#Shop_N"+count).hide();
-                $("#Shop_Js"+count).hide();
-                $("#Shop_Nun"+count).hide();
-                $("#Shop_Time"+count).hide();
-
-                $("#Shop_Day"+count).hide();
-                count--;
-               $("#shop_btn"+count).show();
-               $("#Shop_N"+count).show();
-               $("#Shop_Js"+count).show();
-               $("#Shop_Nun"+count).show();
-               $("#Shop_Time"+count).show();
-               $("#Shop_Day"+count).show();
-            };
-        });
-
-        $("#right_btn").on("click",function(){
-            if(count == name.length){
-                $("#right_btn").prop('disabled',true);
-            }else{
-                $("#left_btn").prop('disables',false);
-                $("#shop_btn"+count).hide();
-                $("#Shop_N"+count).hide();
-                $("#Shop_Js"+count).hide();
-                $("#Shop_Nun"+count).hide();
-                $("#Shop_Time"+count).hide();
-                $("#Shop_Day"+count).hide();
-                count++;
-                $("#shop_btn"+count).show();
-                $("#Shop_N"+count).show();
-               $("#Shop_Js"+count).show();
-               $("#Shop_Nun"+count).show();
-               $("#Shop_Time"+count).show();
-               $("#Shop_Day"+count).show();
-            }
-        });
-
-//-------------------------------------------------ここからfunction--------------------------------------------------
-
-        function  youbi(count){
-        
-
-        if(name[count]["Mon"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'月'+'　'+'</td>');
-        }
-
-        if(name[count]["Tue"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'火'+'　'+'</td>');
-        }
-
-        if(name[count]["Wed"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'水'+'　'+'</td>');
-        }
-
-        if(name[count]["Thu"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'木'+'　'+'</td>');
-        }
-
-        if(name[count]["Fri"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'金'+'　'+'</td>');
-        }
-
-        if(name[count]["Sat"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'土'+'　'+'</td>');
-        }
-
-        if(name[count]["Sun"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'日'+'　'+'</td>');
-        }
-
-        if(name[count]["Hol"] == 0){
-            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'祝日'+'　'+'</td>');
-        }  
     
-    }
-    
-  
+  // for(b = 0 ; b < name.length; b++){
+        //$("#Shop").append('<td id="Shop_N'+b+'" class="syousai">'+ name[b]["ShopName"]+'</td>');    //テーブル内の店名生成
+        //if(b!=0){
+           // $("#Shop_N"+b).hide();
+        //}
+   // }
+
+   //for(c = 0 ; c < name.length; c++){
+       // $("#Js").append('<td id="Shop_Js'+c+'" class="syousai">'+ name[c]["ShopKen"]+name[c]["ShopShi"]+name[c]["ShopTyo"]+name[c]["ShopBill"]+'</td>');  //テーブル内の住所生成
+        //if(c!=0){
+           // $("#Shop_Js"+c).hide();
+        //}
+    //}
+
+   // for(d = 0 ; d < name.length; d++){
+       // $("#Nun").append('<td id="Shop_Nun'+d+'" class="syousai">'+ name[d]["TelNum"]+'</td>');   //テーブル内の電話番号生成
+        //if(d!=0){
+           // $("#Shop_Nun"+d).hide();
+        //}
+   // }
+
+   
+  // for(e = 0 ; e < name.length; e++){
+        //$("#Time").append('<td id="Shop_Time'+e+'" class="syousai">'+ name[e]["EigyouStart"]+'~'+name[e]["EigyouEnd"]+'</td>');  //テーブル内の営業時間
+        //if(e!=0){
+           // $("#Shop_Time"+e).hide();
+        //}
+   // }
  </script>
 </html>

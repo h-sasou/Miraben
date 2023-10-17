@@ -7,7 +7,7 @@ BEGIN
 select * FROM TM_Food WHERE ShopID = input;
 
 END;
-
+DELIMITER ;
 
 drop procedure FoodInsert;
 DELIMITER //
