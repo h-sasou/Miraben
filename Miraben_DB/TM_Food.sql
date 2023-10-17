@@ -8,8 +8,7 @@ select * FROM TM_Food WHERE ShopID = input;
 
 END;
 
-/*
-インサートするときはこれ使ってね
+
 drop procedure FoodInsert;
 DELIMITER //
 CREATE PROCEDURE FoodInsert(IN ShopID int, IN FoodID int,  FoodName VARCHAR(20),IN Price decimal(6,2),IN Calorie VARCHAR(10),IN CategoryCode VARCHAR(15))
@@ -18,8 +17,19 @@ BEGIN
 	values (ShopID, FoodID, FoodName, Price, Calorie, CategoryCode);
 END;
 //
-
 DELIMITER ;
+
+/*
+インサートするときはこれ使ってね。
+(呼び出し)　(プロシージャ名)(ShopID, FoodID, FoodName, Price, Calorie ,CategoryCode);
+call FoodInsert('4', '4', 'しゃーもん', '600', '高', '1');
+
+呼び出すときはこれ使ってね
+(呼び出し)　(プロシージャ名)(店IDの何番を表示させるか )
+call CallMenu(x);
+
+
+
 */
 
 
@@ -37,11 +47,4 @@ Create Table
         ,DeleteFlg		boolean not null DEFAULT '0'
 		,PRIMARY KEY(ShopID,FoodID)
         );
-        
-        
-        
-        
-        
-        
-        
         
