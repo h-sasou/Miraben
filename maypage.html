@@ -3,14 +3,16 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>マイページ：過去の食費</title>
-    <h2>みら弁--マイページ--</h2>
+ 	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  	 <script src="DB_sql.js"></script>
+  	 <script type="text/javascript" src="GamenSeni.js"></script>
     <style>
         .area {
             width: 500px;
             margin: auto;
             flex-wrap: wrap;
             display: flex;
+            
         }
 
         .tab_class {
@@ -42,9 +44,17 @@
         input:checked + .tab_class + .content_class {
             display: block;
         }
+
+        td.example {
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
+
+    <title>マイページ：過去の食費</title>
+    <h2>みら弁--マイページ--</h2>
+
     <div class="area">
 
         <!--最近の注文履歴-->
@@ -53,21 +63,17 @@
         <div class="content_class">
             <!--テーブル-->
             <table border="1">
-                <tr>
-                    <th>日時</th>
+                    <tr><th>日時</th>
                     <th>店名</th>
                     <th>料理名</th>
                     <th>個数</th>
                     <th>金額</th>
-                </tr>
-                <tr>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>さんびゃくまん</td>
-                </tr>
-                <!-- 追加の注文履歴があればここに追加 -->
+                    <tr><td id=""></td>
+                        <td id=""></td>
+                        <td class="FoodName"></td>
+                        <td id=""></td>
+                        <td class="Price"></td>
+                    </tr>
             </table>
         </div>
 
@@ -82,15 +88,11 @@
 
             <!--テーブル-->
             <table border="2">
-                <tr>
-                    <th>店名</th>
-                    <th>金額</th>
-                </tr>
-                <tr>
-                    <td>仮</td>
-                    <td>さんびゃくまん</td>
-                </tr>
-                <!-- 追加の食費データがあればここに追加 -->
+                    <tr><th>料理名</th>
+                    <th>金額</th></tr>
+                    
+                    <tr><td class="FoodName"></td>
+                    <td class="Price"></td></tr>
             </table>
             <!--普通のやつ-->
             <label>
@@ -108,16 +110,9 @@
                 内訳
             </label>
             <table border="2">
-                <tr>
-                    <th>高カロリー</th>
-                    <th>中カロリー</th>
-                    <th>低カロリー</th>
-                </tr>
-                <tr>
-                    <td>仮</td>
-                    <td>さんびゃくまん</td>
-                    <td>仮</td>
-                </tr>
+                <tr><th>高カロリー</th><td id="Calorie"></td></tr>
+                <tr><th>中カロリー</th><td id=""></td></tr>
+                <tr><th>低カロリー</th><td id=""></td></tr>
                 <!-- 追加のカロリーデータがあればここに追加 -->
             </table>
             <!--普通のやつ-->
@@ -141,6 +136,13 @@
         </div>
     </div>
     <input type="button" value="戻る" onclick="RoadMenu()">
-    <script type="text/javascript" src="GamenSeni.js"></script>
 </body>
 </html>
+
+<script>
+    let a = DB.sql("select * from TM_Food;");
+     console.log( a )
+     $(".FoodName").text(a[0]["FoodName"]);
+     $(".Price").text(a[0]["Price"]);
+     $(".Calorie").text(a[0]["Calorie"]);
+</script>
