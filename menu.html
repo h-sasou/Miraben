@@ -20,23 +20,21 @@
         <p>
             11時45分以降は注文はできません
             <input type="search" id="search">
+            <input type="button" value="検索" id="search_btn"><br>
 
-            <br>
-                <input id="left_btn" type="button" value="左">
-                <div id="btn">
-                    <!--ここに店のボタンが追加される-->
-                </div>
-                <!--<input id="btn"type="button" value="お店" onclick="RoadShop()">-->
-                <input id="rigtt_btn" type="button" value="右">
-            <br>
+
+            <input id="left_btn" type="button" value="左">
+            <div id="btn"><!--ここに店のボタンが追加される--></div>
+            <input id="right_btn" type="button" value="右">
+           
 
             店の詳細
-            <table width="50%" order="1">
-                <tr><th>店名</th><td id="ShopName"></td></tr>
-                <tr><th>住所</th><td id="ShopJs"></td></tr>
-                <tr><th>電話番号</th><td id="ShopNun"></td></tr>
-                <tr><th>営業時間</th><td id="ShopTime"></td></tr>
-                <tr><th>定休日</th><td id="ShopDay"></td></tr>
+            <table width="80%" order="1">
+                <tr><th>店名</th>           <td id="Shop"><!--ここに店名が追加される--></td></tr> 
+                <tr><th>住所</th>           <td id="Js"><!--ここに住所が追加される--></td></tr>  
+                <tr><th>電話番号</th>       <td id="Nun"><!--ここに電話番号が追加される--></td></tr>  
+                <tr><th>営業時間</th>       <td id="Time"><!--ここに営業時間が追加される--></td></tr>   
+                <tr><th>定休日</th>         <td id="Mon">月</td><td id="Tue">火</td><td id="Wed">水</td><td id="Thu">木</td><td id="">金</td></tr>   
             </table>
             
  </body>
@@ -46,25 +44,134 @@
 
     let name = DB.sql("select * from tm_shop_mng;");
 
-    for(i = 0 ; i < name.length; i++){
-        $("#btn").append('<button id="shop_btn'+i+'" class="shop_btn">'+name[i]["ShopName"]+'</button>');
-        if(i!=0){
-            $("#shop_btn"+i).hide();
-        };
+
+    $("#btn").text('<button>'+name[count]["ShopName"]+'</button>');
+
+    //for(a = 0 ; a < name.length; a++){
+       // $("#btn").append('<button id="shop_btn'+a+'" class="shop_btn" onclick="RoadShop()">'+name[a]["ShopName"]+'</button>');    //店ボタンの生成
+
+       // if(name[a]["ShopName"] == null){
+            //$("#btn").append('<div id="nasi">'+'これ以上はありません'+'</div>');
+       // }
+
+       // if(a!=0){
+          //  $("#shop_btn"+a).hide();
+        //}
+   // }
+
+    for(b = 0 ; b < name.length; b++){
+        $("#Shop").append('<td id="Shop_N'+b+'" class="syousai">'+ name[b]["ShopName"]+'</td>');    //テーブル内の店名生成
+        if(b!=0){
+            $("#Shop_N"+b).hide();
+        }
     }
 
-    $("#left_btn").on("click",function(){
+    for(c = 0 ; c < name.length; c++){
+        $("#Js").append('<td id="Shop_Js'+c+'" class="syousai">'+ name[c]["ShopKen"]+name[c]["ShopShi"]+name[c]["ShopTyo"]+name[c]["ShopBill"]+'</td>');  //テーブル内の住所生成
+        if(c!=0){
+            $("#Shop_Js"+c).hide();
+        }
+    }
+
+    for(d = 0 ; d < name.length; d++){
+        $("#Nun").append('<td id="Shop_Nun'+d+'" class="syousai">'+ name[d]["TelNum"]+'</td>');   //テーブル内の電話番号生成
+        if(d!=0){
+            $("#Shop_Nun"+d).hide();
+        }
+    }
+
+    for(e = 0 ; e < name.length; e++){
+        $("#Time").append('<td id="Shop_Time'+e+'" class="syousai">'+ name[e]["EigyouStart"]+'~'+name[e]["EigyouEnd"]+'</td>');  //テーブル内の営業時間
+        if(e!=0){
+            $("#Shop_Time"+e).hide();
+        }
+    }
+
+
+
+
+        $("#left_btn").on("click",function(){
+            if(count == 0){
+                $("#left_btn").prop('disabled',true);
+            }else{
+                $("#right_btn").prop('disables',false);
+                //$("#shop_btn"+count).hide();  
+                $("#Shop_N"+count).hide();
+                $("#Shop_Js"+count).hide();
+                $("#Shop_Nun"+count).hide();
+                $("#Shop_Time"+count).hide();
+
+                $("#Shop_Day"+count).hide();
+                count--;
+               $("#shop_btn"+count).show();
+               $("#Shop_N"+count).show();
+               $("#Shop_Js"+count).show();
+               $("#Shop_Nun"+count).show();
+               $("#Shop_Time"+count).show();
+               $("#Shop_Day"+count).show();
+            };
+        });
+
+        $("#right_btn").on("click",function(){
+            if(count == name.length){
+                $("#right_btn").prop('disabled',true);
+            }else{
+                $("#left_btn").prop('disables',false);
+                $("#shop_btn"+count).hide();
+                $("#Shop_N"+count).hide();
+                $("#Shop_Js"+count).hide();
+                $("#Shop_Nun"+count).hide();
+                $("#Shop_Time"+count).hide();
+                $("#Shop_Day"+count).hide();
+                count++;
+                $("#shop_btn"+count).show();
+                $("#Shop_N"+count).show();
+               $("#Shop_Js"+count).show();
+               $("#Shop_Nun"+count).show();
+               $("#Shop_Time"+count).show();
+               $("#Shop_Day"+count).show();
+            }
+        });
+
+//-------------------------------------------------ここからfunction--------------------------------------------------
+
+        function  youbi(count){
         
 
+        if(name[count]["Mon"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'月'+'　'+'</td>');
+        }
 
-    })
+        if(name[count]["Tue"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'火'+'　'+'</td>');
+        }
 
-    $("#right_btn").on("click",function(){
+        if(name[count]["Wed"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'水'+'　'+'</td>');
+        }
 
+        if(name[count]["Thu"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'木'+'　'+'</td>');
+        }
 
+        if(name[count]["Fri"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'金'+'　'+'</td>');
+        }
 
-    })
+        if(name[count]["Sat"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'土'+'　'+'</td>');
+        }
 
+        if(name[count]["Sun"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'日'+'　'+'</td>');
+        }
+
+        if(name[count]["Hol"] == 0){
+            $("#Day").append('<td id="Shop_Day'+f+'" class="syousai">'+'祝日'+'　'+'</td>');
+        }  
+    
+    }
+    
   
  </script>
 </html>
