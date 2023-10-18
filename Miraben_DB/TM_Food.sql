@@ -13,6 +13,8 @@ drop procedure FoodInsert;
 DELIMITER //
 CREATE PROCEDURE FoodInsert(IN ShopID int, IN FoodID int,  FoodName VARCHAR(20),IN Price decimal(6,2),IN Calorie VARCHAR(10),IN CategoryCode VARCHAR(15))
 BEGIN
+
+
     INSERT INTO TM_Food (ShopID, FoodID, FoodName, Price, Calorie ,CategoryCode) 
 	values (ShopID, FoodID, FoodName, Price, Calorie, CategoryCode);
 END;
