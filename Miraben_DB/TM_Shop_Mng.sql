@@ -33,13 +33,25 @@ BEGIN
 	VALUES (ShopName, ShopKen, ShopShi, ShopTyo, ShopBill, Mon, Tue, Wed, Thu, Fri, Sat, Sun, Hol, TelNum, EigyouStart, EigyouEnd, DeleteFlg);
 END;
 //
+DELIMITER ;
 
+drop procedure CallMenu;
+DELIMITER //
+CREATE PROCEDURE CallMenu(IN input int)
+BEGIN
+select * FROM TM_Shop_mng WHERE ShopID = input;
+END;//
 DELIMITER ;
 
 /*
 インサートするときはこれ使ってね
 -- 呼び出し プロシージャ名(ShopName, ShopKen, ShopShi, ShopTyo, ShopBill, Mon, Tue, Wed, Thu, Fri, Sat, Sun, Hol, TelNum, EigyouStart, EigyouEnd, DeleteFlg) 
 call ShopInsert('豚貴族','山梨県','山梨市','山梨町', '新日本ビル',0,1,1,1,1,0,0,0,09014231455,'09:00','17:00',0); 
+
+呼び出す時はこれ使ってね
+(呼び出し)　(プロシージャ名)(店IDの何番を表示させるか )
+call  CallMenu(x);
+
 */
         
         
