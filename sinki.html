@@ -3,38 +3,99 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
-        <title>新規登録</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="DB_sql.js"></script>
+        <script type="text/javascript" src="GamenSeni.js"></script>
+   
     </head>
+        <title>新規登録</title>
         <body>
             <h1>みら弁</h1>
+
             <h2>--新規登録--</h2>
 
             <label for="UserName">
                 ユーザー名:
-                <input type="text" id="username">
+                <input type="text" id="username" maxlength="20" pattern="[ぁ-んァ-ヶｦ-ﾟ一-龠０-９a-zA-Z0-9\-]+">
             </label>
+            
             <p>（20文字以内・ローマ字・数字・記号不可)</p>
 
             <label for="UserID">
                 ユーザーID:
-                <input type="text" id="userID">
+                <input type="text" id="userID" maxlength="20" >
+               
+                
             </label>
+
             <p>このユーザーIDはすでに登録されています</p>
 
             <label for="PassWord">
                 パスワード:
-                <input type="password" id="pass">
+                <input type="password" id="pass" maxlength="20" >
             </label>
-            <p>（8～20文字以内,大文字・小文字・数字のみ）</p>
+
+            <p id="tyuui">（8～20文字以内,大文字・小文字・数字のみ）</p>
 
             <label for="PassWord+">
                 パスワード確認:
-                <input type="password" id="pass+">
+                <input type="password" id="pass+" maxlength="20">
             </label>
+
             <p>パスワードが一致しません</p>
             <p>登録完了</p>
 
-            <input type="button" value="登録" id="touroku">
+            <input type="button" value="登録" id="touroku" class="touroku_C">
 
         </body>
+
+        <script>
+
+            let user = DB.sql("select * from tm_user;");
+
+             $("#touroku").on("click", function(){
+
+                let user_ID = $("#userID").val();
+                    for(i=0; i < user.length; ++i){
+
+                        if(user_ID == user[i]["UserID"]){
+                             console.log ("ooo");
+
+                        }
+                    
+                        
+                    }
+
+              
+
+                   
+
+
+                   
+                
+             });
+            
+
+            $("#pass").ready(function(){  //パスワードのチェック
+
+                $("#touroku_C").on("click", function(){
+            
+
+                    var check3 = $("#pass").val();
+
+                    if(check3.length < 8){
+
+                        var err = "8文字以上入力してください。";
+                        $("#tyuui").html(err); 
+    
+                    }else{ 
+
+                        $("#tyuui").hide();
+
+                    }
+
+                });
+            });
+
+        </script>
 </html>

@@ -1,7 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="DB_sql.js"></script>
+    <script type="text/javascript" src="GamenSeni.js"></script>
+   
+</head>
     <title>ログイン</title>
     <style>
         body {
@@ -23,18 +29,24 @@
     </style>
 </head>
 <body>
+
     <h1>みら弁</h1>
     <h3>--miraben--</h3>
 
     <br>
 
     <label for="userID">ユーザーID:
-        <input type="text" id="userID">
+        <input type="text" id="userID" maxlength="30">
     </label>
+
     <label for="pass">パスワード:
-        <input type="password" id="pass">
+        <input type="password" id="pass" maxlength="20">
     </label>
+
     <input type="button" value="ログイン" id="login">
+
 </body>
+
+
 </html>
 

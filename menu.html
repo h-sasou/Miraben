@@ -96,7 +96,9 @@
 
 //検索
 
-let kennsaku =DB.sql("select * from tm_shop_mng like ")
+let kennsaku =DB.sql("select * from tm_shop_mng where ShopName like '"+moji+"%';");
+
+
 
 
 
@@ -113,35 +115,35 @@ let kennsaku =DB.sql("select * from tm_shop_mng like ")
             $("#Sun").show();
             $("#Hol").show();
 
-        if(name[count]["Mon"] == 1){
+        if(name[count]["Mon"] == 0){
             $("#Mon").hide();
         }
 
-        if(name[count]["Tue"] == 1){
+        if(name[count]["Tue"] == 0){
             $("#Tue").hide();
         }
 
-        if(name[count]["Wed"] == 1){
+        if(name[count]["Wed"] == 0){
             $("#Wed").hide();
         }
 
-        if(name[count]["Thu"] == 1){
+        if(name[count]["Thu"] == 0){
             $("#Thu").hide();
         }
 
-        if(name[count]["Fri"] == 1){
+        if(name[count]["Fri"] == 0){
             $("#Fri").hide();
         }
 
-        if(name[count]["Sat"] == 1){
+        if(name[count]["Sat"] == 0){
             $("#Sat").hide();
         }
 
-        if(name[count]["Sun"] == 1){
+        if(name[count]["Sun"] == 0){
             $("#Sun").hide();
         }
 
-        if(name[count]["Hol"] == 1){
+        if(name[count]["Hol"] == 0){
             $("#Hol").hide();
         }  
     
