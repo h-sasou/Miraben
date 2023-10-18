@@ -2,37 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="DB_sql.js"></script>
+    <script type="text/javascript" src="GamenSeni.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>注文確定</title>
-    <h2>みら弁--注文確定--</h2>
 </head>
-    <body>
+<body>
+    <h2>みら弁--注文確定--</h2>
+    <h1>注文確定</h1>
+    <!--テーブル-->
+    <p>
+        <table border="1">
+            <tr>　<!--カラム名-->
+                <th>注文内容</th>
+                <th>個数</th>
+                <th>金額</th>
+            </tr>
+            <tr>　<!--データ-->
+                <td id="Food1"></td>
+                <td id="some"></td>
+                <td id="Price"></td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </p>
+    <br>
+    <label>上記の注文が確定しました</label>
+    <br>
+    <input type="button" value="OK">
 
-        <h1>注文確定</h1>
-    
-        <!--テーブル-->
-              <p><table border="1">
-                    <tr>
-                      <th>注文内容</th>
-                      <th>個数</th>
-                      <th>金額</th>
-                    </tr>
-                    <tr>
-                      <td>仮</td>
-                      <td>仮</td>
-                      <td>仮</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                   </table></p>
-                   <br>
-                   <label>上記の注文が確定しました</label>
-                   <br>
-                   <input type="button" value="OK">
-      
 
-    </body>
+    <script>
 
-    
+        let name = DB.sql("call MyPageOrderRireki('j-murata@ciel.japan');");　//データベース取得
+
+        // テーブルにデータを表示
+        for (a = 0; a < name.length; a++) {
+            $("#Food1").append('<tr>' + '<td id="Food_N' + a + '" class="syousai" colspan="2">' + name[a]["ShopName"] + '</td>' + '<td>' + name[a]["FoodName"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+
+        }
+
+        // テーブルにデータを表示
+        for (b = 0; b < name.length; b++) {
+            $("#some").append('<tr>' + '<td id="Food_N' + b + '" class="syousai">' + name[b]["some"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+
+        }
+
+        // テーブルにデータを表示
+        for (c = 0; c < name.length; c++) {
+            $("#Price").append('<tr>' + '<td id="Food_N' + c + '" class="syousai">' + name[c]["Price"] + '円' + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+
+        }
+    </script>
+</body>
+
 </html>

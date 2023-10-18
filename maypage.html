@@ -7,7 +7,7 @@
   	 <script src="DB_sql.js"></script>
   	 <script type="text/javascript" src="GamenSeni.js"></script>
     <style>
-        /*.area {
+        .area {
             width: 500px;
             margin: auto;
             flex-wrap: wrap;
@@ -25,6 +25,7 @@
             display: block;
             float: left;
             order: -1;
+            margin: 3px auto;
         }
 
         input[name="tab_name"] {
@@ -47,28 +48,38 @@
 
         td.example {
             white-space: nowrap;
-        }-->
+        }
     </style>
 </head>
 <body>
 
     <title>マイページ：過去の食費</title>
-    <h2>みら弁--マイページ--</h2>
+    <h2>みら弁　--マイページ--</h2>
 
     <div class="area">
 
         <!--最近の注文履歴-->
-        <input type="radio" name="tab_name" id="tab1" onclick="tab1db()">
+        <input type="radio" name="tab_name" id="tab1">
         <label class="tab_class" for="tab1">最近の注文履歴</label>
         <div class="content_class">
             <!--テーブル-->
             <table border="1">
-                <tr><th>日時</th>
-                    <th>店名</th>
-                    <th>料理名</th>
-                    <th>個数</th>
-                    <th>金額</th>
-                </tr>
+
+            <tr>
+                <th>日時</th>
+                <th>店名</th>
+                <th>料理名</th>
+                <th>個数</th>
+                <th>金額</th>
+            </tr>
+
+            <tr>
+                <td nowrap id="Time"></td>
+                <td nowrap id="Shop"></td>
+                <td nowrap id="Food1"></td>
+                <td nowrap id="Some"></td>
+                <td nowrap id="Price1"></td>
+            </tr>
             </table>
         </div>
 
@@ -82,9 +93,17 @@
             </label>
 
             <!--テーブル-->
-            <table border="2">
-                    <tr><th>料理名</th>
-                    <th>金額</th></tr>
+            <table border="1">
+
+                <tr>
+                    <th>料理名</th>
+                    <th>金額</th>
+                </tr>
+
+                <tr>
+                    <td id="Food2"><!--ここに店名が追加される--></td>
+                    <td id="Price2"><!--ここに店名が追加される--></td>
+                </tr>
             </table>
             <!--普通のやつ-->
             <label>
@@ -128,35 +147,53 @@
         </div>
     </div>
     <input type="button" value="戻る" onclick="RoadMenu()">
-</body>
-</html>
 
-<script>
-    // データベースからデータを取得し、テーブルに挿入する関数
-    function tab1db() {
-        // DB.sqlがオブジェクトの配列を返すことを仮定
-        let orderData = DB.sql("select * from tm_food;");
+    <script>
 
-        // テーブルをリセット
-        $("#tab1").empty();
+        let name = DB.sql("call MyPageOrderRireki('j-murata@ciel.japan');")
+
+        for (a = 0; a < name.length; a++) {
+            $("#Time").append('<tr>' + '<td id="Oder_T' + a + '" class="syousai">' + name[a]["OrderTime"] + '</td>' + '</tr>');     //テーブル内の店名生成
+
+        }
 
         // テーブルにデータを表示
-        for (let i = 0; i < orderData.length; i++) {
-            // 行を新しく作成
-            let newRow = $("<tr>");
+        for (b = 0; b < name.length; b++) {
+            $("#Shop").append('<tr>' + '<td id="Shop_N' + b + '" class="syousai">' + name[b]["ShopName"] + '</td>' + '</tr>');     //テーブル内の店名生成
 
-            // 各列にデータを追加
-            newRow.append("<td>" + orderData[i]["date"] + "</td>");
-            newRow.append("<td>" + orderData[i]["shop"] + "</td>");
-            newRow.append("<td>" + orderData[i]["FoodName"] + "</td>");
-            newRow.append("<td>" + orderData[i]["quantity"] + "</td>");
-            newRow.append("<td>" + orderData[i]["Price"] + "</td>");
-
-            // もしデータに追加の列がある場合は、追加の列も同様に追加してください
-
-            // 新しい行をテーブルに追加
-            $("#tab1").append(newRow);
         }
-        console.log("実行");
-    }
-</script>
+
+        // テーブルにデータを表示
+        for (c = 0;  c < name.length; c++) {
+            $("#Food1").append('<tr>' + '<td id="Food_N' + c + '" class="syousai">' + name[c]["FoodName"] + '</td>' + '</tr>');     //テーブル内の店名生成
+
+        }
+
+        // テーブルにデータを表示
+        for (c = 0; c < name.length; c++) {
+            $("#Food2").append('<tr>' + '<td id="Food_N' + c + '" class="syousai">' + name[c]["FoodName"] + '</td>' + '</tr>');     //テーブル内の店名生成
+
+        }
+
+        // テーブルにデータを表示
+        for (d = 0; d < name.length; d++) {
+            $("#Some").append('<tr>' + '<td id="some' + d + '" class="syousai">' + name[d]["some"] + '</td>' + '</tr>');     //テーブル内の店名生成
+
+        }
+
+        // テーブルにデータを表示
+        for (e = 0; e < name.length; e++) {
+            $("#Price1").append('<tr>'+'<td id="Food_P' + e + '" class="syousai">' + name[e]["Price"] +'円'+'</td>'+'</tr>');    //テーブル内の店名生成
+
+        }
+
+        for (e = 0; e < name.length; e++) {
+            $("#Price2").append('<tr>' + '<td id="Food_P' + e + '" class="syousai">' + name[e]["Price"] + '円' + '</td>' + '</tr>');    //テーブル内の店名生成
+
+        }
+                console.log("実行");
+
+    </script>
+
+</body>
+</html>
