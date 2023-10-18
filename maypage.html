@@ -7,7 +7,7 @@
   	 <script src="DB_sql.js"></script>
   	 <script type="text/javascript" src="GamenSeni.js"></script>
     <style>
-        .area {
+        /*.area {
             width: 500px;
             margin: auto;
             flex-wrap: wrap;
@@ -47,7 +47,7 @@
 
         td.example {
             white-space: nowrap;
-        }
+        }-->
     </style>
 </head>
 <body>
@@ -58,22 +58,17 @@
     <div class="area">
 
         <!--最近の注文履歴-->
-        <input type="radio" name="tab_name" id="tab1" checked>
+        <input type="radio" name="tab_name" id="tab1" onclick="tab1db()">
         <label class="tab_class" for="tab1">最近の注文履歴</label>
         <div class="content_class">
             <!--テーブル-->
             <table border="1">
-                    <tr><th>日時</th>
+                <tr><th>日時</th>
                     <th>店名</th>
                     <th>料理名</th>
                     <th>個数</th>
                     <th>金額</th>
-                    <tr><td id=""></td>
-                        <td id=""></td>
-                        <td class="FoodName"></td>
-                        <td id=""></td>
-                        <td class="Price"></td>
-                    </tr>
+                </tr>
             </table>
         </div>
 
@@ -90,9 +85,6 @@
             <table border="2">
                     <tr><th>料理名</th>
                     <th>金額</th></tr>
-                    
-                    <tr><td class="FoodName"></td>
-                    <td class="Price"></td></tr>
             </table>
             <!--普通のやつ-->
             <label>
@@ -140,9 +132,31 @@
 </html>
 
 <script>
-    let a = DB.sql("select * from TM_Food;");
-     console.log( a )
-     $(".FoodName").text(a[0]["FoodName"]);
-     $(".Price").text(a[0]["Price"]);
-     $(".Calorie").text(a[0]["Calorie"]);
+    // データベースからデータを取得し、テーブルに挿入する関数
+    function tab1db() {
+        // DB.sqlがオブジェクトの配列を返すことを仮定
+        let orderData = DB.sql("select * from tm_food;");
+
+        // テーブルをリセット
+        $("#tab1").empty();
+
+        // テーブルにデータを表示
+        for (let i = 0; i < orderData.length; i++) {
+            // 行を新しく作成
+            let newRow = $("<tr>");
+
+            // 各列にデータを追加
+            newRow.append("<td>" + orderData[i]["date"] + "</td>");
+            newRow.append("<td>" + orderData[i]["shop"] + "</td>");
+            newRow.append("<td>" + orderData[i]["FoodName"] + "</td>");
+            newRow.append("<td>" + orderData[i]["quantity"] + "</td>");
+            newRow.append("<td>" + orderData[i]["Price"] + "</td>");
+
+            // もしデータに追加の列がある場合は、追加の列も同様に追加してください
+
+            // 新しい行をテーブルに追加
+            $("#tab1").append(newRow);
+        }
+        console.log("実行");
+    }
 </script>
