@@ -3,16 +3,16 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
- 	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  	 <script src="DB_sql.js"></script>
-  	 <script type="text/javascript" src="GamenSeni.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="DB_sql.js"></script>
+    <script type="text/javascript" src="GamenSeni.js"></script>
     <style>
         .area {
             width: 500px;
             margin: auto;
             flex-wrap: wrap;
             display: flex;
-            
         }
 
         .tab_class {
@@ -105,6 +105,7 @@
                     <td id="Price2"><!--ここに店名が追加される--></td>
                 </tr>
             </table>
+            <canvas id="barChart"></canvas>
             <!--普通のやつ-->
             <label>
                 今月の食費合計
@@ -151,6 +152,7 @@
     <script>
 
         let name = DB.sql("call MyPageOrderRireki('j-murata@ciel.japan');")
+        //let name  = DB.sql("select * from address;")
 
         for (a = 0; a < name.length; a++) {
             $("#Time").append('<tr>' + '<td id="Oder_T' + a + '" class="syousai">' + name[a]["OrderTime"] + '</td>' + '</tr>');     //テーブル内の店名生成
@@ -189,9 +191,32 @@
 
         for (e = 0; e < name.length; e++) {
             $("#Price2").append('<tr>' + '<td id="Food_P' + e + '" class="syousai">' + name[e]["Price"] + '円' + '</td>' + '</tr>');    //テーブル内の店名生成
-
+            
         }
-                console.log("実行");
+        console.log("うごいた！");
+
+
+        let barCtx = document.getElementById("barChart");
+        let barConfig = {
+            type: 'bar',
+            data: {
+                labels: ["1月", "2月", "3月", "4月", "5月", "6月"],
+                datasets: [{
+                    data: [10, 19, 6, 8, 2, 11],
+                    label: 'label',
+                    backgroundColor: [  // それぞれの棒の色を設定(dataの数だけ)
+                        '#ff0000',
+                        '#0000ff',
+                        '#ffff00',
+                        '#008000',
+                        '#800080',
+                        '#ffa500',
+                    ],
+                    borderWidth: 1,
+                }]
+            },
+        };
+        let barChart = new Chart(barCtx, barConfig);
 
     </script>
 
