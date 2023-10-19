@@ -5,6 +5,7 @@
  	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   	 <script src="DB_sql.js"></script>
   	 <script type="text/javascript" src="GamenSeni.js"></script>
+    <script src="https://unpkg.com/wanakana"></script>
 
  </head>
    
@@ -13,13 +14,13 @@
             みら弁--メニュー--
             <input type="button" value="マイページ"onclick="RoadMypage()">
             <input type="button" value="幹事"onclick="Roadkanzi()">
-            <input type="button" value="商品受け取り"onclick="">
+            <input type="button" value="商品受け取り">
            </h2>
 
 
         <p>
             11時45分以降は注文はできません
-            <input type="search" id="search">
+            <input type="text" id="search"  maxlength="1">
             <input type="button" value="検索" id="search_btn"><br>
 
 
@@ -45,6 +46,10 @@
 
     let name = DB.sql("select * from tm_shop_mng;");
 
+    let furagu = 0;  //検索ボタン押したかのフラグ
+
+    let count_search = 0;  //合致した配列の数
+
 
     $("#btn").text(name[0]["ShopName"]);
 
@@ -61,7 +66,6 @@
     $("#left_btn").prop('disabled',true);
  
     $("#left_btn").on("click",function(){
-
     
             if(count == 0){
                 $("#left_btn").prop('disabled',true);
@@ -76,6 +80,26 @@
                 youbi(count);
               
             };
+
+            //検索後
+
+            if(furagu == 1){
+                if(hyouji[count_search] == 0){
+                    $("#left_btn").prop('disabled',true);
+                }else{
+                    $("#right_btn").prop('disabled',false);
+                    hyouji[count_search]++
+                    $("#btn").text(name[hyouji[count_search]]["ShopName"]);
+                    $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
+                    $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
+                    $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
+                    $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
+                    youbi(hyouji[count_search]);
+                    furagu = 1;
+                
+                }
+            }
+
     });  
 
     $("#right_btn").on("click",function(){
@@ -92,12 +116,78 @@
                 $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
                 youbi(count);
             }
+
+            //検索後
+
+            if(furagu == 1){
+
+                if(hyouji[count_search] == count_search){
+                    $("#right_btn").prop('disabled',true);
+                }else{
+                    $("#left_btn").prop('disabled',false);
+                    hyouji[count_search]--
+                    $("#btn").text(name[hyouji[count_search]]["ShopName"]);
+                    $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
+                    $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
+                    $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
+                    $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
+                    youbi(hyouji[count_search]);
+                }
+            }
     });   
 
 //検索
 
-let kennsaku =DB.sql("select * from tm_shop_mng where ShopName like '"+moji+"%';");
+    let Count = name.length;  //データの数
 
+    let hira_name = [Count];
+
+    let hyouji =[name.length];
+
+   
+
+    $("#search_btn").on("click",function(){
+
+        if(!$("#search").val()==""){
+
+            for(i=0;i<name.length;i++){
+                let hiragana = wanakana.toHiragana(name[i]["ShopName"]);   //平仮名に変換して変数に入れる
+
+                hira_name[i] = hiragana;  //配列に入れる
+
+                let kensaku = $("#search").val();  //入力した値を持ってくる
+
+                let slice_hira = hira_name[i].slice(0,1);   //配列ごとに前から1文字だけを残し変数に入れる
+
+                if(kensaku==slice_hira){
+   
+                    hyouji[count_search] = i; //合致したら配列にDBのデータが何番目にあるかを格納
+                    console.log(hyouji[count_search])
+                    count_search++;
+                    
+                    
+                };
+            };
+
+            $("#btn").text(name[hyouji[count_search-1]]["ShopName"]);
+            $("#Shop").text(name[hyouji[count_search-1]]["ShopName"]);
+            $("#Js").text(name[hyouji[count_search-1]]["ShopKen"]+name[hyouji[count_search-1]]["ShopShi"]+name[hyouji[count_search-1]]["ShopTyo"]+name[hyouji[count_search-1]]["ShopBill"]);
+            $("#Nun").text(name[hyouji[count_search-1]]["TelNum"]);
+            $("#Time").text(name[hyouji[count_search-1]]["EigyouStart"]+'~'+name[hyouji[count_search-1]]["EigyouEnd"]);
+            youbi(hyouji[count_search-1]);
+            furagu = 1;
+
+        }else{
+
+            $("#btn").text(name[0]["ShopName"]);
+            $("#Shop").text(name[0]["ShopName"]);
+            $("#Js").text(name[0]["ShopKen"]+name[0]["ShopShi"]+name[0]["ShopTyo"]+name[0]["ShopBill"]);
+            $("#Nun").text(name[0]["TelNum"]);
+            $("#Time").text(name[0]["EigyouStart"]+'~'+name[0]["EigyouEnd"]);
+            youbi(0);
+            furagu = 0;
+        };
+    });
 
 
 
