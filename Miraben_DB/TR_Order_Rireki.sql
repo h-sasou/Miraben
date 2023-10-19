@@ -2,15 +2,21 @@ Drop Table If Exists TR_Order_Rireki;
 
 Create Table
 	TR_Order_Rireki(
-		 OrderRirekiID smallint unsigned NOT NULL AUTO_INCREMENT
-		,UserID varchar(20) NOT NULL
-        ,ShopID varchar(5) NOT NULL 
-        ,FoodID varchar(5) NOT NULL
-		,some decimal(3) unsigned zerofill DEFAULT NULL
-		,OrderTime datetime DEFAULT NULL
+		 OrderRirekiID 			smallint unsigned NOT NULL AUTO_INCREMENT
+		,UserID					varchar(30) not null
+        ,OrderShopName			varchar(30) not null
+        ,OrderFoodName			varchar(30) not null 
+        ,some					varchar(30) not null
+        ,Price 					decimal(6)unsigned zerofill DEFAULT NULL
+        ,calorie				varchar(10)
+        ,OrderTime				datetime not null
         ,PRIMARY KEY (OrderRirekiID)
         );
       
+      
+      
+      
+      /*
 drop PROCEDURE MyPageOrderRireki;
 DELIMITER //
 CREATE PROCEDURE MyPageOrderRireki(IN input varchar(30))
@@ -27,3 +33,7 @@ and TR_Order_Rireki.UserID = input;
 END;
 //
 DELIMITER ;
+*/
+
+
+
