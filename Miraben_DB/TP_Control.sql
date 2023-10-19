@@ -33,4 +33,5 @@ call AdministratorLogout();
 呼び出したらlogoutControlが0になるよ
 
 insert into TP_Control  (LoginControl) values (0); 
+
 */

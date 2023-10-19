@@ -151,7 +151,7 @@
 
     <script>
 
-        let name = DB.sql("call MyPageOrderRireki('j-murata@ciel.japan');")
+        let name = DB.sql("SELECT OrderTime, OrderShopName, OrderFoodName, some, SUBSTRING(Price, REGEXP_INSTR(Price, '[1-9]')) AS Price FROM mirabendb.tr_order_rireki where UserID = 'user1@example.com';")
         //let name  = DB.sql("select * from address;")
 
         for (a = 0; a < name.length; a++) {
@@ -185,7 +185,7 @@
 
         // テーブルにデータを表示
         for (e = 0; e < name.length; e++) {
-            $("#Price1").append('<tr>'+'<td id="Food_P' + e + '" class="syousai">' + name[e]["Price"] +'円'+'</td>'+'</tr>');    //テーブル内の店名生成
+            $("#Price1").append('<tr>' + '<td id="Food_P' + e + '" class="syousai">' + name[e]["some"] * name[e]["Price"] +'円'+'</td>'+'</tr>');    //テーブル内の店名生成
 
         }
 
@@ -196,11 +196,22 @@
         console.log("うごいた！");
 
 
+        let Year = new Date().getFullYear();
+        let Month = new Date().getMonth() + 1;
+        let Day = new Date().getDay();
+        let Hours = new Date().getHours();
+        let Minutes = new Date().getMinutes();
+        let Seconds = new Date().getSeconds();
+
+
+
+
+
         let barCtx = document.getElementById("barChart");
         let barConfig = {
             type: 'bar',
             data: {
-                labels: ["1月", "2月", "3月", "4月", "5月", "6月"],
+                labels: ["5月", "6月", "7月", "8月", "9月", "+月"],
                 datasets: [{
                     data: [10, 19, 6, 8, 2, 11],
                     label: 'label',
