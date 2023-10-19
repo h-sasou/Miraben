@@ -17,11 +17,7 @@
     <div class="area">
 
         <!--グランドメニュー-->
-<<<<<<< HEAD
         <input type="radio" name="Calorie" id="tab1" checked>
-=======
-        <input type="button" name="Calorie" id="tab1" checked>
->>>>>>> b05b02bec8e714f7799044d78dc810e5a8b8df18
         <label class="tab_class" >グランドメニュー</label>  
 
         <div id ="G_menyu" class="content_class">     
@@ -59,29 +55,14 @@
 
         </div>
 
-    </div>
-
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-    
+      </div>
 
 
     <input type="button" value="戻る" onclick="RoadMenu()">
    
 </body>
->>>>>>> b05b02bec8e714f7799044d78dc810e5a8b8df18
+<style>
 
-
-<<<<<<< HEAD
   .area {
     width: 500px;
     margin: auto;
@@ -120,16 +101,6 @@
   }
   </style>
 
-
-
-
-
-
-    
-
-
-    <input type="button" value="戻る" onclick="RoadMenu()">
-   
 </body>
 
 
@@ -170,45 +141,6 @@
 
 
 
-=======
-
-
-  <script>
-    let count=0;
-    
-    let Menyu = DB.sql("select * from TM_Food ORDER BY Calorie;");
-
-    //$("#tab1").on("click",function(){
-
-      //let count=0;
-
-      for(a = 0; a < Menyu.length; ++a){
-
-       if(Menyu[a]["Calorie"] == 0 ){
-        
-        for(i = 0 ; i <  Menyu.length/4+1; ++i){   //4つボタンが表示されたら改行
-
-              let NewDiv=$('<div>');
-
-          for(j = 0 ; j < 4 ; ++j){      //4つずつボタンの表示
-
-            let NewButton=$('<button di = "Btn'+i * 3 + j + 1+'">'+Menyu[i * 3 + j + 1]["FoodName"]+'</button>');
-
-            $("#G_menyu").append(NewButton);
-
-          }
-
-          $("#G_menyu").append(NewDiv);
-
-        }
-      };
-
-    };
-    //});
-
-
-
->>>>>>> b05b02bec8e714f7799044d78dc810e5a8b8df18
  
 
 
