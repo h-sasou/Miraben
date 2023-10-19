@@ -15,7 +15,9 @@ drop PROCEDURE MyPageOrderRireki;
 DELIMITER //
 CREATE PROCEDURE MyPageOrderRireki(IN input varchar(30))
 BEGIN
-select TR_Order_Rireki.OrderTime, TM_Shop_mng.ShopName, TM_Food.FoodName, TR_Order_Rireki.some, TM_Food.Price 
+select TR_Order_Rireki.OrderTime, TM_Shop_mng.ShopName, TM_Food.FoodName, TR_Order_Rireki.some, SUBSTRING(TM_Food.Price, 
+    REGEXP_INSTR(TM_Food.Price, '[1-9]') -- [1-9]は0以外の数値を表す正規表現
+  ) AS Price
 from TR_Order_Rireki 
 join TM_Shop_mng on TR_Order_Rireki.ShopID = TM_Shop_mng.ShopID
 join TM_Food on TR_Order_Rireki.FoodID = TM_Food.FoodID
