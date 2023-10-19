@@ -1,150 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <head>
     <meta charset="utf-8" />
+    <meta name="v
+          ewport" content="width=device-width, initial-scale=1.0">
+    <title>注文選択</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-     <script src="DB_sql.js"></script>
+    <script src="DB_sql.js"></script>
     <script type="text/javascript" src="GamenSeni.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <title>注文選択</title>
-  <h2>みら弁--注文選択--</h2>
-    
+    <h2>みら弁--注文選択--</h2>
     <label>店名</label>
-    <input type="button" value="カート確認"onclick="RoadCart()">
+    <input type="button" value="カート確認" onclick="RoadCart()">
+    
     <div class="area">
+        <!-- グランドメニュー -->
+        <input type="radio" name="Calorie" id="tab1">
+        <label class="tab_class" for="tab1">グランドメニュー</label>
+        <div id="G_menyu" class="content_class">
 
-        <!--グランドメニュー-->
-        <input type="radio" name="Calorie" id="tab1" checked>
-        <label class="tab_class" >グランドメニュー</label>  
-
-        <div id ="G_menyu" class="content_class">     
-          
-          <!--DBの料理数分ボタンを配置-->
-
+            <!-- DBの料理数分ボタンを配置 -->
         </div>
 
-        <!--サイドメニュー-->
+        <!-- サイドメニュー -->
         <input type="radio" name="Calorie" id="tab2">
         <label class="tab_class" for="tab2">サイドメニュー</label>
-
         <div id="S_menyu" class="content_class">
-
-            <!--DBの料理数分ボタンを配置-->
-
+            <!-- DBの料理数分ボタンを配置 -->
         </div>
 
-        <!--デザート-->
+        <!-- デザート -->
         <input type="radio" name="Calorie" id="tab3">
         <label class="tab_class" for="tab3">デザート</label>
-
         <div id="D_menyu" class="content_class">
-
-            <!--DBの料理数分ボタンを配置-->
-
+            <!-- DBの料理数分ボタンを配置 -->
         </div>
 
-        <!--トッピング-->
-        <input type="radio"  name="Calorie" id="tab4">
+        <!-- トッピング -->
+        <input type="radio" name="Calorie" id="tab4">
         <label class="tab_class" for="tab4">トッピング</label>
         <div id="T_menyu" class="content_class">
-
-            <!--DBの料理数分ボタンを配置-->
-
+            <!-- DBの料理数分ボタンを配置 -->
         </div>
 
-      </div>
-
-
+    </div>
     <input type="button" value="戻る" onclick="RoadMenu()">
-   
 </body>
 <style>
+    .area {
+        width: 500px;
+        margin: auto;
+        flex-wrap: wrap;
+        display: flex;
+    }
 
-  .area {
-    width: 500px;
-    margin: auto;
-    flex-wrap: wrap;
-    display: flex;
-  }
-  
-  .tab_class {
-    width: calc(100%/4);
-    height: 50px;
-    background-color: darkgrey;
-    line-height: 50px;
-    font-size: 15px;
-    text-align: center;
-    display: block;
-    float: left;
-    order: -1;
-  }
-   
-  input[name="Calorie"] {
-    display: none;
-  }
-   
-  input:checked + .tab_class {
-    background-color: cadetblue;
-    color: aliceblue;
-  }
-   
-  .content_class {
-    display: none;
-    width: 100%;
-  }
-   
-  input:checked + .tab_class + .content_class {
-    display: block;
-  }
-  </style>
+    .tab_class {
+        width: calc(100% / 4);
+        height: 50px;
+        background-color: darkgrey;
+        line-height: 50px;
+        font-size: 15px;
+        text-align: center;
+        display: block;
+        float: left;
+        order: -1;
+    }
 
-</body>
+    input[name="Calorie"] {
+        display: none;
+    }
 
+    input:checked + .tab_class {
+        background-color: #460e44;
+        color: #fabf14;
+    }
 
+    .content_class {
+        display: none;
+        width: 100%;
+    }
 
+    input:checked + .tab_class + .content_class {
+        display: block;
+    }
+</style>
+<script>
+    let count = 0;
+    let Menyu = DB.sql("select * from TM_Food where ShopID = 2  ORDER BY Calorie;");
 
-  <script>
-    let count=0;
-    
-    let Menyu = DB.sql("select * from TM_Food ORDER BY Calorie;");
+    // ページが読み込まれたら実行
+    // ページが読み込まれたら実行
+    $(document).ready(function () {
+        // タブごとに異なる処理を定義
+        $("#tab1").on("click", function () {
+            $("#G_menyu").empty();
+            generateButtons("G_menyu");
+        });
 
-    //$("#tab1").on("click",function(){
+        $("#tab2").on("click", function () {
+            $("#S_menyu").empty();
+            generateButtons("S_menyu");
+        });
 
-      //let count=0;
+        $("#tab3").on("click", function () {
+            $("#D_menyu").empty();
+            generateButtons("D_menyu");
+        });
 
-      for(a = 0; a < Menyu.length; ++a){
+        $("#tab4").on("click", function () {
+            $("#T_menyu").empty();
+            generateButtons("T_menyu");
+        });
 
-       if(Menyu[a]["Calorie"] == 0 ){
-        
-        for(i = 0 ; i <  Menyu.length/4+1; ++i){   //4つボタンが表示されたら改行
+        // ボタンを生成する関数
+        function generateButtons(menuId) {
+            // CategoryCodeが menuId に対応する値の場合のみボタンを生成
+            for (let i = 0; i < Menyu.length; ++i) {
+                if (Menyu[i]["CategoryCode"] == getCategoryCode(menuId)) {
+                    let NewButton = $('<button di="Btn' + (i + 1) + '">' + Menyu[i]["FoodName"] + '</button>');
+                    $("#" + menuId).append(NewButton);
 
-              let NewDiv=$('<div>');
-
-          for(j = 0 ; j < 4 ; ++j){      //4つずつボタンの表示
-
-            let NewButton=$('<button di = "Btn'+i * 3 + j + 1+'">'+Menyu[i * 3 + j + 1]["FoodName"]+'</button>');
-
-            $("#G_menyu").append(NewButton);
-
-          }
-
-          $("#G_menyu").append(NewDiv);
-
+                    // 生成されたボタンに対してクリックイベントハンドラを設定
+                    NewButton.on("click", function () {
+                        handleButtonClick(Menyu[i]["FoodName"]);
+                    });
+                }
+            }
         }
-      };
 
-    };
-    //});
+        // ボタンがクリックされたときの共通処理
+        function handleButtonClick(foodName) {
+            console.log("ボタンがクリックされました (料理名: " + foodName + ")");
+            // ここに、ボタンごとに異なる処理を追加できます
+        }
 
+        // アクティブなメニューIDに基づいてカテゴリコードを取得する関数
+        function getCategoryCode(menuId) {
+            switch (menuId) {
+                case "G_menyu":
+                    return 0;
+                case "S_menyu":
+                    return 1;
+                case "D_menyu":
+                    return 2;
+                case "T_menyu":
+                    return 3;
+                default:
+                    return -1; // デフォルトのカテゴリコード
+            }
+        }
+    });
 
-
- 
-
-
-    
-
-  </script>
+</script>
 </html>
