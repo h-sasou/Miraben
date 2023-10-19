@@ -6,8 +6,8 @@ Create Table
 		,UserID					varchar(30) not null
         ,OrderShopName			varchar(30) not null
         ,OrderFoodName			varchar(30) not null 
-        ,some					varchar(30) not null
-        ,Price 					decimal(6)unsigned zerofill DEFAULT NULL
+        ,some					decimal(3) unsigned zerofill not NULL
+        ,Price 					decimal(6) unsigned zerofill DEFAULT NULL
         ,calorie				varchar(10)
         ,OrderTime				datetime not null
         ,payFlg					boolean not null DEFAULT '0'
@@ -15,6 +15,20 @@ Create Table
         );
         
         
-        
-        
+drop PROCEDURE UserOrder;
+DELIMITER //
+CREATE PROCEDURE UserOrder(IN InputUserID varchar(30), IN InputOrderShopName varchar(30) , IN InputOrderFoodName varchar(30) , IN Inputsome decimal(6) , IN InputPrice decimal(6) , IN Inputcalorie varchar(10) ,IN InputOrderTime datetime)
+BEGIN
+INSERT INTO TE_Order (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
+VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
+INSERT INTO TR_Order_Rireki (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
+VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
+END;
+//
+DELIMITER ;
+
+
+
+
+
         
