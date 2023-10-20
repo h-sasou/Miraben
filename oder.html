@@ -10,18 +10,26 @@
     <script type="text/javascript" src="GamenSeni.js"></script>
 </head>
 <body>
+
     <h2>みら弁--注文選択--</h2>
     <label>店名</label>
     <input type="button" value="カート確認" onclick="RoadCart()">
-    
+
     <div class="area">
+
+        <div class="pop" id="UPDATE">
+            <button class="pop_cancel">✖</button>
+            <div class="pop_title_alone"id="foodnameP"></div>
+            <button class="pop_button_alone" id="update_ok">カートに入れる</button>
+        </div>
+
         <!-- グランドメニュー -->
         <input type="radio" name="Calorie" id="tab1">
         <label class="tab_class" for="tab1">グランドメニュー</label>
         <div id="G_menyu" class="content_class">
-
             <!-- DBの料理数分ボタンを配置 -->
         </div>
+
 
         <!-- サイドメニュー -->
         <input type="radio" name="Calorie" id="tab2">
@@ -47,6 +55,7 @@
     </div>
     <input type="button" value="戻る" onclick="RoadMenu()">
 </body>
+
 <style>
     .area {
         width: 500px;
@@ -84,12 +93,75 @@
     input:checked + .tab_class + .content_class {
         display: block;
     }
-</style>
-<script>
-    let count = 0;
-    let Menyu = DB.sql("select * from TM_Food where ShopID = 2  ORDER BY Calorie;");
 
-    // ページが読み込まれたら実行
+    /*ポップアップ用*/
+    .pop {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: 600;
+        height: 400;
+        border: double 5px #1E90FF;
+        background-color: white;
+        z-index: 2;
+    }
+
+    #pop_back {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: 100%;
+        height: 100%;
+        background-color: gray;
+        opacity: 0.5;
+        z-index: 2;
+    }
+
+    .pop_cancel {
+        width: 30;
+        height: 30;
+        display: block;
+        text-align: center;
+        margin: 10 10 auto auto;
+        background-color: orangered;
+        z-index: 2;
+    }
+
+
+    .pop_title_alone {
+        width: fit-content;
+        font-size: 45;
+        margin: 80 auto 10 auto;
+        z-index: 2;
+    }
+
+    .pop_title {
+        width: fit-content;
+        font-size: 25;
+        margin: 80 auto 10 auto;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .pop_button_alone {
+        display: block;
+        width: 200;
+        height: 30;
+        margin: 80 auto;
+        z-index: 2;
+    }
+
+</style>
+
+<script>
+
+
+
+    let count = 0;
+    let Menyu = DB.sql("select * from TM_Food where ShopID = 3   ORDER BY Calorie;");
+
     // ページが読み込まれたら実行
     $(document).ready(function () {
         // タブごとに異なる処理を定義
@@ -118,22 +190,56 @@
             // CategoryCodeが menuId に対応する値の場合のみボタンを生成
             for (let i = 0; i < Menyu.length; ++i) {
                 if (Menyu[i]["CategoryCode"] == getCategoryCode(menuId)) {
-                    let NewButton = $('<button di="Btn' + (i + 1) + '">' + Menyu[i]["FoodName"] + '</button>');
+                    let NewButton = $('<button data-foodname="' + Menyu[i]["FoodName"] + '">' + Menyu[i]["FoodName"] + "||" + Menyu[i]["Price"] + "円" + '</button>');
                     $("#" + menuId).append(NewButton);
 
                     // 生成されたボタンに対してクリックイベントハンドラを設定
                     NewButton.on("click", function () {
-                        handleButtonClick(Menyu[i]["FoodName"]);
+                        let foodName = $(this).data("foodname");
+                        displayPopup(foodName);
                     });
                 }
             }
         }
 
-        // ボタンがクリックされたときの共通処理
-        function handleButtonClick(foodName) {
-            console.log("ボタンがクリックされました (料理名: " + foodName + ")");
-            // ここに、ボタンごとに異なる処理を追加できます
+            $("#UPDATE").hide();
+        // ポップアップを表示する関数
+        /*function displayPopup(foodName) {
+            // ここに、foodNameに基づいたポップアップの表示処理を追加
+            $("#UPDATE").show();
+            console.log("押された。")
+            $("#pop_back").show();
+        }*/
+
+        $(".pop_cancel").on("click", function () {
+            $("#UPDATE").hide();
+            $("#INSERT").hide();
+            $("#BACK").hide();
+            $("#pop_back").hide();
+        })
+
+        // ポップアップを表示する関数
+        function displayPopup(foodName) {
+            // ここに、foodNameに基づいたポップアップの表示処理を追加
+            $("#UPDATE").show();
+            $("#pop_back").show();
+            // FoodnamePの領域にfoodNameを設定
+            $("#foodnameP").text(foodName);
+
+            // ここに、その他のポップアップ表示処理を追加
+
+            // 例: カートに入れるボタンのクリックイベントハンドラを設定
+            $("#update_ok").on("click", function () {
+                // カートに追加する処理などをここに追加
+                // foodName を使用して必要な処理を実行
+                console.log("カートに " + foodName + " を追加しました。");
+                $("#UPDATE").hide();
+                $("#BACK").hide();
+                $("#pop_back").hide();
+            });
         }
+
+
 
         // アクティブなメニューIDに基づいてカテゴリコードを取得する関数
         function getCategoryCode(menuId) {
@@ -151,6 +257,5 @@
             }
         }
     });
-
 </script>
 </html>
