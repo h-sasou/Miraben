@@ -70,23 +70,24 @@
         $("#UPDATE").hide();
         $("#pop_back").hide();
 
-        $(window).on('load', function (){    //画面読み込み時、アプリ側が操作していたらログイン不可
+           //画面読み込み時、アプリ側が操作していたらログイン不可
 
             let kanri = DB.sql("SELECT * FROM TP_Control;");
 
-            if(kanri[0]["LoginControl"] == 0){ 
+            if(kanri!=null&&kanri.length!=0){
+                if(kanri[0]["LoginControl"] == 0){ 
 
-                $("#UPDATE").show();
-		        $("#pop_back").show();
+                    $("#UPDATE").show();
+		            $("#pop_back").show();
 
-            }else{
+                }else{
 
-                $("#UPDATE").hide();
-                $("#pop_back").hide();
+                    $("#UPDATE").hide();
+                    $("#pop_back").hide();
 
-            };
+                };
 
-        });
+            }
 
 
         //ログイン処理

@@ -53,7 +53,7 @@
         </div>
 
     </div>
-    <input type="button" value="戻る" onclick="RoadMenu()">
+    <input type="button" id="bakku"  value="戻る" onclick="RoadMenu()">
 </body>
 
 <style>
@@ -160,11 +160,13 @@
 
 
     let count = 0;
-    let Menyu = DB.sql("select * from TM_Food where ShopID = 3   ORDER BY Calorie;");
+    let Menyu = DB.sql("select * from TM_Food where "+localStorage.getItem("Shop_Key")+"ORDER BY Calorie;");
 
     // ページが読み込まれたら実行
     $(document).ready(function () {
+
         // タブごとに異なる処理を定義
+
         $("#tab1").on("click", function () {
             $("#G_menyu").empty();
             generateButtons("G_menyu");
@@ -185,17 +187,25 @@
             generateButtons("T_menyu");
         });
 
-        // ボタンを生成する関数
+        // ボタンを生成する関数---------------------------------------------------------------------------
+
         function generateButtons(menuId) {
+
             // CategoryCodeが menuId に対応する値の場合のみボタンを生成
+
             for (let i = 0; i < Menyu.length; ++i) {
                 if (Menyu[i]["CategoryCode"] == getCategoryCode(menuId)) {
+
                     let NewButton = $('<button data-foodname="' + Menyu[i]["FoodName"] + '">' + Menyu[i]["FoodName"] + "||" + Menyu[i]["Price"] + "円" + '</button>');
+
                     $("#" + menuId).append(NewButton);
 
                     // 生成されたボタンに対してクリックイベントハンドラを設定
+
                     NewButton.on("click", function () {
+
                         let foodName = $(this).data("foodname");
+
                         displayPopup(foodName);
                     });
                 }
@@ -203,7 +213,7 @@
         }
 
             $("#UPDATE").hide();
-        // ポップアップを表示する関数
+        // ポップアップを表示する関数---------------------------------------
 
         const array = [1, 2, 3];
         const serializedArray = JSON.stringify(array);
@@ -223,14 +233,14 @@
 
         // ポップアップを表示する関数
         function displayPopup(foodName) {
-            // ここに、foodNameに基づいたポップアップの表示処理を追加
+        
             $("#UPDATE").show();
             $("#pop_back").show();
 
             // FoodnamePの領域にfoodNameを設定
             $("#foodnameP").text(foodName);
 
-            // カートに入れるボタンのクリックイベントハンドラを設定
+            // カートに入れるボタンのクリックイベント
             $("#update_ok").on("click", function () {
                 // カートに商品を追加（foodNameを配列に追加）
                 cartItems.push(foodName);
@@ -249,7 +259,9 @@
 
         // カートの内容を表示するための関数
         function displayCart() {
+
             // ローカルストレージからカートの内容を取得
+
             let cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
 
             // カートの内容を表示する処理をここに追加
@@ -280,5 +292,21 @@
             }
         }
     });
+
+
+    //店選択に戻るとデータの削除
+
+    $("#bakku").on("click",function(){
+
+        if (confirm('注文したデータが消えます')) {
+
+            localStorage.removeItem("cartItems");
+
+    
+        } else {
+            return false
+        }
+        
+    })
 </script>
 </html>

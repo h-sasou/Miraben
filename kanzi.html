@@ -1,11 +1,17 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="DB_sql.js"></script>
+        <script type="text/javascript" src="GamenSeni.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>注文確定</title>
+    </head>
     <title>幹事</title>
     <h2>みら弁--幹事--</h2>
-</head>
     <body>
         <!--テーブル-->
         <table border="1">
@@ -17,11 +23,11 @@
                 <th>料金支払い</th>
             </tr>
             <tr>
-                <td>仮</td>
-                <td>仮</td>
-                <td>仮</td>
-                <td>仮</td>
-                <td><input type="checkbox"></td>
+                <td id="user">仮</td>
+                <td id="tyuumonn">仮</td>
+                <td id="kinngaku">仮</td>
+                <td id="get">仮</td>
+                <td id="pay"><input type="checkbox"></td>
             </tr>
             <tr>
             </tr>
@@ -35,4 +41,47 @@
 
         <script type="text/javascript" src="GamenSeni.js"></script>
     </body>
+
+
+    <script>
+
+        let kanji = DB.sql("call OrderLeader('1');")
+
+        for(a=0;a<kanji.length;++a){
+
+            $("#user").append('<tr>' + '<td id="user' + a + '" class="syousai">' + kanji[a][""] + '</td>' + '</tr>')
+
+        };
+
+        for(b=0;b<kanji.length;++b){
+
+            $("#tyuumonn").append('<tr>' + '<td id="tyuumonn' + b + '" class="syousai">' + kanji[b][""] +kanji[b][""]+kanji[b][""]+'</td>' + '</tr>')
+
+        };
+
+        for(c=0;c<kanji.length;++c){
+
+            $("#kinngaku").append('<tr>' + '<td id="kinngaku' + c + '" class="syousai">' + kanji[c][""] + "円" +'</td>' + '</tr>')
+
+        };
+
+        for(d=0;d<kanji.length;++d){
+
+            $("#get").append('<tr>' + '<td id="kinngaku' + c + '" class="syousai">' + "未" +'</td>' + '</tr>')
+
+        };
+
+        
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        function kakuninn(nun){
+
+            if(kanji[nun]["MngFlg"] == 0){
+
+                $("#get"+nun).text("済")
+
+            };
+        };
+    </script>
 </html>
