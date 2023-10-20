@@ -204,12 +204,10 @@
 
             $("#UPDATE").hide();
         // ポップアップを表示する関数
-        /*function displayPopup(foodName) {
-            // ここに、foodNameに基づいたポップアップの表示処理を追加
-            $("#UPDATE").show();
-            console.log("押された。")
-            $("#pop_back").show();
-        }*/
+
+        const array = [1, 2, 3];
+        const serializedArray = JSON.stringify(array);
+        localStorage.setItem('myArray', serializedArray);
 
         $(".pop_cancel").on("click", function () {
             $("#UPDATE").hide();
