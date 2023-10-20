@@ -1,15 +1,18 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="utf-8" />
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-     <script src="DB_sql.js"></script>
-    <script type="text/javascript" src="GamenSeni.js"></script>
-   
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="DB_sql.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="GamenSeni.js"></script>
+   </head>
+
     <title>ログイン</title>
+
     <style>
+
         body {
             text-align: center;
             /*background-image: url(karaage.png);*/
@@ -26,26 +29,124 @@
             text-align: left;
             margin-bottom: 10px; /* 必要に応じてマージンを調整 */
         }
+
     </style>
-</head>
-<body>
 
-    <h1>みら弁</h1>
-    <h3>--miraben--</h3>
 
-    <br>
+    <body>
 
-    <label for="userID">ユーザーID:
-        <input type="text" id="userID" maxlength="30">
-    </label>
+        <h1>みら弁</h1>
+        <h3>--miraben--</h3>
 
-    <label for="pass">パスワード:
-        <input type="password" id="pass" maxlength="20">
-    </label>
+        <br>
 
-    <input type="button" value="ログイン" id="login">
+        <label for="userID">ユーザーID:
+            <input type="text" id="userID" maxlength="10" style="width: 10%;"> <span>@ciel-japan.jp</span>
+           
+        </label>
 
-</body>
+        <label for="pass">パスワード:
+            <input type="password" id="pass" maxlength="20">
+        </label>
+
+        <p id="err" class="errr"></p>
+
+        <input type="button" value="ログイン" id="login">
+
+
+        <!--アプリ側更新ポップアップ背景-->
+        <div id="pop_back"></div>
+
+        <!--アプリ側更新ポップアップ-->
+	    <div class="pop" id="UPDATE">
+		    <div class="pop_title_alone">管理側が操作中です。</div>
+	    </div>
+
+    </body>
+
+    <script>
+
+        //画面の処理
+        $("#UPDATE").hide();
+        $("#pop_back").hide();
+
+        $(window).on('load', function (){    //画面読み込み時、アプリ側が操作していたらログイン不可
+
+            let kanri = DB.sql("SELECT * FROM TP_Control;");
+
+            if(kanri[0]["LoginControl"] == 0){ 
+
+                $("#UPDATE").show();
+		        $("#pop_back").show();
+
+            }else{
+
+                $("#UPDATE").hide();
+                $("#pop_back").hide();
+
+            };
+
+        });
+
+
+        //ログイン処理
+
+        
+        let user = DB.sql("select * from tm_user;");
+
+        $("#login").on("click", function(){
+
+            let user_ID = $("#userID").val()+"@ciel.japan"; // ---------------------------------本当は@ciel-japan.jp！！！！！！！！！！！！
+            let user_PS = $("#pass").val();
+
+            if(!$("#userID").val() == "" && !$("#pass").val() == ""){
+
+                for(i=0; i < user.length; ++i){
+
+                    if(user_ID == user[i]["UserID"]){  //ユーザーIDのチェック
+
+                        for(j=0; j <user.length; ++j){
+
+                            if(user_PS == user[j]["PassWord"]){  //ユーザーパスワードのチェック
+                                 
+                                let Year =  new Date().getFullYear();
+                                let Month = new Date().getMonth()+ 1;
+                                let Day = new Date().getDay();
+                                let Hours = new Date().getHours();
+                                let Minutes = new Date().getMinutes();
+                                let Seconds = new Date().getSeconds();
+
+                                let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
+
+                                localStorage.setItem("ID_Key",user_ID+"@ciel.japan");   // ---------------------------------本当は@ciel-japan-jp！！！！！！！！！！！！
+                            
+                                RoadMenu();    //画面遷移
+
+                            }else if(!user_PS == user[j]["PassWord"]){   //パスワードが違う
+
+                                $("#err").text("入力に間違いがあります"); 
+
+                            };
+                        };
+                    }else{
+
+                        $("#err").text("入力に間違いがあります"); 
+            
+                    }
+                };
+            }else{
+
+                $("#err").text("入力してください"); 
+
+            };
+        });
+
+
+
+    
+    </script>
+
+
 
 
 </html>
