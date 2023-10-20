@@ -31,19 +31,9 @@ call FoodInsert('4', '4', 'しゃーもん', '600', '高', '1');
 (呼び出し)　(プロシージャ名)(店IDの何番を表示させるか )
 call CallMenu(x);
 
+
+
 */
-
--- drop PROCEDURE MyPageOrderRireki;
-DELIMITER //
-CREATE PROCEDURE ReadFood(IN input varchar(30))
-BEGIN
-SELECT * FROM miraben_db.tm_food
-where ShopID = input;
-END;
-//
-DELIMITER ;
-
-
 
 
 Drop Table If Exists TM_Food;
