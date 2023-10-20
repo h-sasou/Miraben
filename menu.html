@@ -214,7 +214,7 @@
 
     const saikai = new Date(Year, Month, Day,0,0,0); //再開
 
-    let Today = new Dare (Year,Month,Day,Hours,Minutes,Seconds);
+    let Today = new Date (Year,Month,Day,Hours,Minutes,Seconds);
 
     if(simekiri < Today ){   //11時３０を過ぎたらボタン押下不可
 
@@ -228,6 +228,26 @@
         $("#btn").prop('disabled',false);
 
     };
+
+
+//-----------------------------------------商品受け取り処理------------------------------------------------------
+
+    let userID = localStorage.getItem("ID_Key")
+
+    let get = DB.sql('call Receive('+userID+')');
+
+    console.log(get)
+
+    let user = DB.sql("select * from tm_")
+
+    for(a=0;a<get.length;++a){
+
+        if(get[a][""]){}
+    }
+
+    if(get[""]["pickFlg"]== 0);
+
+
 
 
 //-------------------------------------------------ここからfunction--------------------------------------------------

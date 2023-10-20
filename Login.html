@@ -41,7 +41,8 @@
         <br>
 
         <label for="userID">ユーザーID:
-            <input type="text" id="userID" maxlength="30">
+            <input type="text" id="userID" maxlength="10" style="width: 10%;"> <span>@ciel-japan.jp</span>
+           
         </label>
 
         <label for="pass">パスワード:
@@ -95,49 +96,49 @@
 
         $("#login").on("click", function(){
 
-            let user_ID = $("#userID").val();
+            let user_ID = $("#userID").val()+"@ciel.japan"; // ---------------------------------本当は@ciel-japan.jp！！！！！！！！！！！！
             let user_PS = $("#pass").val();
 
             if(!$("#userID").val() == "" && !$("#pass").val() == ""){
 
-                    for(i=0; i < user.length; ++i){
+                for(i=0; i < user.length; ++i){
 
-                        if(user_ID == user[i]["UserID"]){  //ユーザーIDのチェック
+                    if(user_ID == user[i]["UserID"]){  //ユーザーIDのチェック
 
-                            for(j=0; j <user.length; ++j){
+                        for(j=0; j <user.length; ++j){
 
-                                if(user_PS == user[j]["PassWord"]){  //ユーザーパスワードのチェック
+                            if(user_PS == user[j]["PassWord"]){  //ユーザーパスワードのチェック
                                  
-                                 let Year =  new Date().getFullYear();
-                                 let Month = new Date().getMonth()+ 1;
-                                 let Day = new Date().getDay();
-                                 let Hours = new Date().getHours();
-                                 let Minutes = new Date().getMinutes();
-                                 let Seconds = new Date().getSeconds();
+                                let Year =  new Date().getFullYear();
+                                let Month = new Date().getMonth()+ 1;
+                                let Day = new Date().getDay();
+                                let Hours = new Date().getHours();
+                                let Minutes = new Date().getMinutes();
+                                let Seconds = new Date().getSeconds();
 
-                                 let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
+                                let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
 
-                                 localStorage()
+                                localStorage.setItem("ID_Key",user_ID+"@ciel.japan");   // ---------------------------------本当は@ciel-japan-jp！！！！！！！！！！！！
                             
-                                 RoadMenu();    //画面遷移
+                                RoadMenu();    //画面遷移
 
-                                }else if(!user_PS == user[j]["PassWord"]){   //パスワードが違う
+                            }else if(!user_PS == user[j]["PassWord"]){   //パスワードが違う
 
-                                    $("#err").text("パスワードが違います"); 
+                                $("#err").text("入力に間違いがあります"); 
 
-                                };
                             };
-
-                        }else {  //ユーザーIDが違う
-
-                            $("#err").text("ユーザーID が違います"); 
-
                         };
-                    };
-                };
+                    }else{
 
+                        $("#err").text("入力に間違いがあります"); 
             
-      
+                    }
+                };
+            }else{
+
+                $("#err").text("入力してください"); 
+
+            };
         });
 
 
