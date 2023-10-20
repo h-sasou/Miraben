@@ -15,12 +15,16 @@ Create Table
         );
         
         
+        
 drop PROCEDURE UserOrder;
 DELIMITER //
-CREATE PROCEDURE UserOrder(IN InputUserID varchar(30), IN InputOrderShopName varchar(30) , IN InputOrderFoodName varchar(30) , IN Inputsome decimal(6) , IN InputPrice decimal(6) , IN Inputcalorie varchar(10) ,IN InputOrderTime datetime)
+CREATE PROCEDURE UserOrder(IN InputUserID varchar(30), IN InputOrderShopName varchar(30) , IN InputOrderFoodName varchar(30) , IN Inputsome decimal(6) ,
+ IN InputPrice decimal(6) , IN Inputcalorie varchar(10) ,IN InputOrderTime datetime,IN InputShopID smallint)
 BEGIN
 INSERT INTO TE_Order (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
 VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
+INSERT INTO TT_Order_Mng (ShopID, OrderID, LeaderID) 
+VALUES (InputShopID, LAST_INSERT_ID(), InputUserID);
 INSERT INTO TR_Order_Rireki (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
 VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
 END;
