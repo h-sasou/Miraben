@@ -69,5 +69,9 @@
         $("#UPDATE").hide();
         $("#pop_back").hide();
        })
+
+        const serializedArray = localStorage.getItem('cartItems');
+        const array = JSON.parse(serializedArray);
+        console.log(array); // [1, 2, 3]
      </script>
 </html>

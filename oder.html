@@ -216,26 +216,51 @@
             $("#pop_back").hide();
         })
 
+
+        // 配列を初期化（既に保存されたデータがある場合は取得）
+        let cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+
+
         // ポップアップを表示する関数
         function displayPopup(foodName) {
             // ここに、foodNameに基づいたポップアップの表示処理を追加
             $("#UPDATE").show();
             $("#pop_back").show();
+
             // FoodnamePの領域にfoodNameを設定
             $("#foodnameP").text(foodName);
 
-            // ここに、その他のポップアップ表示処理を追加
-
-            // 例: カートに入れるボタンのクリックイベントハンドラを設定
+            // カートに入れるボタンのクリックイベントハンドラを設定
             $("#update_ok").on("click", function () {
-                // カートに追加する処理などをここに追加
-                // foodName を使用して必要な処理を実行
+                // カートに商品を追加（foodNameを配列に追加）
+                cartItems.push(foodName);
+
+                // 配列をローカルストレージに保存
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
                 console.log("カートに " + foodName + " を追加しました。");
+
+                // ポップアップを非表示にする
                 $("#UPDATE").hide();
                 $("#BACK").hide();
                 $("#pop_back").hide();
             });
         }
+
+        // カートの内容を表示するための関数
+        function displayCart() {
+            // ローカルストレージからカートの内容を取得
+            let cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+
+            // カートの内容を表示する処理をここに追加
+            // 例: カート内の商品一覧を表示
+            console.log("カート内の商品一覧:");
+            cartItems.forEach(item => {
+                console.log(item);
+            });
+        }
+
+// カートを表示するためのボタンなどの要素にクリックイベントを追加することで、カートの内容を表示できます。
 
 
 
