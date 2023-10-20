@@ -64,8 +64,12 @@
     youbi(0);
 
     $("#left_btn").prop('disabled',true);
+
+//初期表示------------------------------------------------------------------------------------------------------------------------------------------
  
-    $("#left_btn").on("click",function(){
+    $("#left_btn").on("click",function(){    //右ボタン押下
+
+        if(furagu == 0){
     
             if(count == 0){
                 $("#left_btn").prop('disabled',true);
@@ -80,31 +84,35 @@
                 youbi(count);
               
             };
+        }
 
-            //検索後
+        //検索後
 
-            if(furagu == 1){
-                if(hyouji[count_search] == 0){
-                    $("#left_btn").prop('disabled',true);
-                }else{
-                    $("#right_btn").prop('disabled',false);
-                    hyouji[count_search]++
-                    $("#btn").text(name[hyouji[count_search]]["ShopName"]);
-                    $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
-                    $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
-                    $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
-                    $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
-                    youbi(hyouji[count_search]);
-                    furagu = 1;
+        if(furagu == 1){
+
+            if(hyouji[count_search] == 0){
+                $("#left_btn").prop('disabled',true);
+            }else{
+                $("#right_btn").prop('disabled',false);
+                hyouji[count_search]++
+                $("#btn").text(name[hyouji[count_search]]["ShopName"]);
+                $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
+                $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
+                $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
+                $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
+                youbi(hyouji[count_search]);
+                furagu = 1;
                 
-                }
-            }
+            };
+        };
 
     });  
 
     $("#right_btn").on("click",function(){
+
+        if(furagu == 0){
         
-            if(count == name.length){
+            if(count == name.length-1){
                 $("#right_btn").prop('disabled',true);
             }else{
                 $("#left_btn").prop('disabled',false);
@@ -115,28 +123,29 @@
                 $("#Nun").text(name[count]["TelNum"]);
                 $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
                 youbi(count);
-            }
+            };
+        };
 
-            //検索後
+        //検索後
 
-            if(furagu == 1){
+        if(furagu == 1){
 
-                if(hyouji[count_search] == count_search){
+            if(hyouji[count_search] == count_search){
                     $("#right_btn").prop('disabled',true);
-                }else{
-                    $("#left_btn").prop('disabled',false);
-                    hyouji[count_search]--
-                    $("#btn").text(name[hyouji[count_search]]["ShopName"]);
-                    $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
-                    $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
-                    $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
-                    $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
-                    youbi(hyouji[count_search]);
-                }
-            }
+            }else{
+                $("#left_btn").prop('disabled',false);
+                hyouji[count_search]--
+                $("#btn").text(name[hyouji[count_search]]["ShopName"]);
+                $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
+                $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
+                $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
+                $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
+                youbi(hyouji[count_search]);
+            };
+        };
     });   
 
-//検索
+//検索機能--------------------------------------------------------------------------------------------------------------------------------------------
 
     let Count = name.length;  //データの数
 
@@ -190,6 +199,35 @@
     });
 
 
+
+//１１時30分に締め切り-------------------------------------------------------------------------------------------------------------------------------
+
+
+    let Year =  new Date().getFullYear();
+    let Month = new Date().getMonth()+ 1;
+    let Day = new Date().getDay();
+    let Hours = new Date().getHours();
+    let Minutes = new Date().getMinutes();
+    let Seconds = new Date().getSeconds();
+
+    const simekiri = new Date( Year, Month, Day,11, 30,0 ); // 注文締め切り
+
+    const saikai = new Date(Year, Month, Day,0,0,0); //再開
+
+    let Today = new Dare (Year,Month,Day,Hours,Minutes,Seconds);
+
+    if(simekiri < Today ){   //11時３０を過ぎたらボタン押下不可
+
+        $("#btn").prop('disabled',true);
+
+    };
+
+
+    if(saikai < Today ){    //０時０分を過ぎたら再開
+
+        $("#btn").prop('disabled',false);
+
+    };
 
 
 //-------------------------------------------------ここからfunction--------------------------------------------------
