@@ -70,6 +70,7 @@
         $("#UPDATE").hide();
         $("#pop_back").hide();
 
+
            //画面読み込み時、アプリ側が操作していたらログイン不可
 
             let kanri = DB.sql("SELECT * FROM TP_Control;");
@@ -117,7 +118,7 @@
                                 let Minutes = new Date().getMinutes();
                                 let Seconds = new Date().getSeconds();
 
-                                let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
+                                //let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
 
                                 localStorage.setItem("ID_Key",user_ID+"@ciel.japan");   // ---------------------------------本当は@ciel-japan-jp！！！！！！！！！！！！
                             
