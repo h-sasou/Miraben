@@ -1,4 +1,4 @@
-Drop Table If Exists TM_Shop_mng;
+Drop Table If Exists TM_Shop_Mng;
 
 Create Table
 	TM_Shop_mng(
@@ -34,6 +34,7 @@ BEGIN
 END;
 //
 DELIMITER ;
+
 
 drop procedure CallMenu;
 DELIMITER //

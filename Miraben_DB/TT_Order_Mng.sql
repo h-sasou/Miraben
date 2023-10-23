@@ -3,7 +3,7 @@ Drop Table If Exists TT_Order_Mng;
 Create Table
 	TT_Order_Mng(
 		OrderMngID			smallint not null primary key unique AUTO_INCREMENT
-		,ShopID				varchar(5) not null
+		,ShopID				smallint not null 
         ,OrderID			smallint not null 
         ,LeaderID			varchar(30) not null unique
 		,MngFlg				boolean not null null DEFAULT '0'

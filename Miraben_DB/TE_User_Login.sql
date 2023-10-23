@@ -2,7 +2,7 @@ Drop Table If Exists TE_User_Login;
 
 Create Table
 	TE_User_Login(
-		UserID					varchar(20) not null PRIMARY KEY
+		UserID					varchar(30) not null PRIMARY KEY
         ,LoginTime				datetime 
         ,LogoutTime				datetime
         );

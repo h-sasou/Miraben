@@ -7,7 +7,7 @@ Create Table
         ,OrderShopName			varchar(30) not null
         ,OrderFoodName			varchar(30) not null 
         ,some					decimal(3) unsigned zerofill not NULL
-        ,Price 					decimal(6) unsigned zerofill DEFAULT NULL
+        ,Price 					decimal(6) unsigned zerofill not NULL
         ,calorie				varchar(10)
         ,OrderTime				datetime not null
         ,payFlg					boolean not null DEFAULT '0'
