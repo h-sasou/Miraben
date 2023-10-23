@@ -24,9 +24,9 @@
                     <th>金額</th>
                 </tr>
                 <tr>
-                    <td>仮</td>
-                    <td>仮</td>
-                    <td>仮</td>
+                    <td id="Food"></td>
+                    <td id="Price"></td>
+                    <td id="some"></td>
                 </tr>
                 <tr>
                 </tr>
@@ -53,18 +53,18 @@
     <script>
         // ポップアップの処理
        $("#UPDATE").hide();
-       $("#pop_back").hide();
- 
+        $("#pop_back").hide();
+
        $("#kakutei_Btn").on("click",function(){  //pop出す
              $("#UPDATE").show();
              $("#pop_back").show();
-         })
- 
+       })
+
        $(".pop_cancel").on("click",function(){    //popを消す
          $("#UPDATE").hide();
          $("#pop_back").hide();
        })
- 
+
        $("#update_ok").on("click",function(){   //確定処理
         $("#UPDATE").hide();
         $("#pop_back").hide();
@@ -73,5 +73,11 @@
         const serializedArray = localStorage.getItem('cartItems');
         const array = JSON.parse(serializedArray);
         console.log(array); // [1, 2, 3]
+
+        for (let a = 0; a < array.length; a++) {
+            // 'aa' の代わりに 'array' のデータを 'a' のインデックスで取得して表示します
+            $("#Food").append('<tr>' + '<td id="Oder_T' + a + '" class="syousai">' + array[a] + '</td>' + '</tr>');
+        }
+
      </script>
 </html>
