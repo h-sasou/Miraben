@@ -2,7 +2,7 @@ Drop Table If Exists TR_Comment;
 
 Create Table
 	TR_Comment(
-		UserID					varchar(30) not null
+		UserID					varchar(30) not null UNIQUE
         ,ShopID					smallint not null 
         ,FoodID					smallint not null 
 		-- ,CategoryCode			varchar(15) not null
