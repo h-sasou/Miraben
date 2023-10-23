@@ -4,40 +4,44 @@
 	 <meta charset="utf-8" />
  	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   	 <script src="DB_sql.js"></script>
+     <link rel="stylesheet" href="menu.css" type="text/css">
   	 <script type="text/javascript" src="GamenSeni.js"></script>
     <script src="https://unpkg.com/wanakana"></script>
 
  </head>
    
  <body>
-           <h2>
-            みら弁--メニュー--
-            <input type="button" value="マイページ"onclick="RoadMypage()">
-            <input type="button" value="幹事"onclick="Roadkanzi()">
-            <input type="button" value="商品受け取り">
-           </h2>
+    <h2>
+        <a class="logo">みら弁--メニュー--</a>
+        <input type="button" class="button" value="マイページ" onclick="RoadMypage()">
+        <input type="button" class="button" value="幹事" onclick="Roadkanzi()">
+        <input type="button" class="button" value="商品受け取り">
+    </h2>
 
 
         
-           <p id="err">11時30分以降は注文はできません 
-            <input type="text" id="search"  maxlength="1">
-            <input type="button" value="検索" id="search_btn"><br>
-        </p>
+    <p id="err">
+        11時30分以降は注文はできません
+        <input type="text" id="search" maxlength="1">
+        <input type="button" value="検索" id="search_btn">
+    </p>
 
-            <input id="left_btn" type="button" value="左" >
-            <button id="btn" ></button>
-            <input id="right_btn" type="button" value="右">
-           
-
+    <div class="arrow-container">
+        <input class="arrow" id="left_btn" type="button" value="＜">
+        <button class="arrow" id="btn"></button>
+        <input class="arrow" id="right_btn" type="button" value="＞">
+        
+        <table width="40%" order="1">
+            <br>
             店の詳細
-            <table width="70%" order="1">
-                <tr><th>店名</th>           <td id="Shop"><!--ここに店名が追加される--></td></tr> 
-                <tr><th>住所</th>           <td id="Js"><!--ここに住所が追加される--></td></tr>  
-                <tr><th>電話番号</th>       <td id="Nun"><!--ここに電話番号が追加される--></td></tr>  
-                <tr><th>営業時間</th>       <td id="Time"><!--ここに営業時間が追加される--></td></tr>   
-                <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>   
+            <tr><th>店名</th>           <td id="Shop"></td></tr>
+            <tr><th>住所</th>           <td id="Js"></td></tr>
+            <tr><th>電話番号</th>       <td id="Nun"></td></tr>
+            <tr><th>営業時間</th>       <td id="Time"></td></tr>
+            <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>
+        </table>
 
-            </table>
+    </div>
             
  </body>
  <script>

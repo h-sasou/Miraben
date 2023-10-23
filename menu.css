@@ -1,0 +1,76 @@
+/* ヘッダー全体のスタイル */
+    h2 {
+        position: relative;
+        width: 100%;
+        line-height: 60px;
+        background: #FF9933;
+        display: flex; /* ヘッダー内の要素を水平配置するために flex を使用 */
+        justify-content:center; /* 要素を左右に均等に配置 */
+        align-items: center; /* 垂直方向中央配置 */
+    }
+
+    /* ロゴのスタイル */
+    h2 .logo {
+        padding: 0 20px;
+        font-size: 18px;
+        color: #0d0015;
+        letter-spacing: .1em;
+    }
+
+    /* ボタンのスタイル */
+    h2 .button {
+        font-size: 14px; /* ボタンの文字サイズを調整（必要に応じて変更） */
+        margin-right: 20px; /* ボタンの右側に一定の余白を設定 */
+    }
+
+    p {
+        margin-left: 450px;
+        margin-right: auto;
+    }
+
+    /* 左右のmarginを個別に指定 */
+    table {
+        margin-left: 340px;
+        margin-right: auto;
+    }
+
+    .arrow-container {
+        text-align: center;
+    }
+
+    .arrow {
+        display: inline-block;
+        border-radius: 20%;
+        font-size: 12pt;
+        text-align: center;
+        cursor: pointer;
+        padding: 50px 50px;
+        background: #ff9933;
+        color: #0d0015;
+        line-height: 1em;
+        transition: .3s;
+        border: 2px solid #ff9933;
+    }
+
+        .arrow:hover {
+            color: #ff9933;
+            background: #ffffff;
+        }
+
+        .button {
+            display       : inline-block;
+            border-radius : 20%;          /* 角丸       */
+            font-size     : 10pt;        /* 文字サイズ */
+            text-align    : center;      /* 文字位置   */
+            cursor        : pointer;     /* カーソル   */
+            padding       : 3px 3px;   /* 余白       */
+            background    : #ff9933;     /* 背景色     */
+            color         : #000000;     /* 文字色     */
+            line-height   : 1em;         /* 1行の高さ  */
+            transition    : .3s;         /* なめらか変化 */
+        }
+        .button:hover {
+            box-shadow    : none;        /* カーソル時の影消去 */
+            color         : #ff9933;     /* 背景色     */
+            background    : #ffffff;     /* 文字色     */
+        }
