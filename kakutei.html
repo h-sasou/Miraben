@@ -37,25 +37,18 @@
 
     <script>
 
-        let name = DB.sql("call MyPageOrderRireki('j-murata@ciel.japan');");　//データベース取得
+        let userID = localStorage.getItem("ID_Key");
+
+        let name = DB.sql("select * from ");//データベース取得
 
         // テーブルにデータを表示
         for (a = 0; a < name.length; a++) {
             $("#Food1").append('<tr>' + '<td id="Food_N' + a + '" class="syousai" colspan="2">' + name[a]["ShopName"] + '</td>' + '<td>' + name[a]["FoodName"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
-
+            $("#some").append('<tr>' + '<td id="Food_S' + a + '" class="syousai">' + name[a]["some"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+            $("#Price").append('<tr>' + '<td id="Food_P' + a + '" class="syousai">' + name[a]["Price"] + '円' + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
         }
 
-        // テーブルにデータを表示
-        for (b = 0; b < name.length; b++) {
-            $("#some").append('<tr>' + '<td id="Food_N' + b + '" class="syousai">' + name[b]["some"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
-
-        }
-
-        // テーブルにデータを表示
-        for (c = 0; c < name.length; c++) {
-            $("#Price").append('<tr>' + '<td id="Food_N' + c + '" class="syousai">' + name[c]["Price"] + '円' + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
-
-        }
+    
     </script>
 </body>
 

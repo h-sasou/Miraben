@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="DB_sql.js"></script>
     <script type="text/javascript" src="GamenSeni.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -17,7 +18,10 @@
 
     <div class="area">
 
+             <!--ポップアップ時のグレー処理-->
+     <div id="pop_back"></div>
         <div class="pop" id="UPDATE">
+            
             <button class="pop_cancel">✖</button>
             <div class="pop_title_alone"id="foodnameP"></div>
             <button class="pop_button_alone" id="update_ok">カートに入れる</button>
@@ -54,7 +58,12 @@
 
     </div>
     <input type="button" id="bakku"  value="戻る" onclick="RoadMenu()">
+
+
+
 </body>
+
+
 
 <style>
     .area {
@@ -156,9 +165,9 @@
 </style>
 
 <script>
-
-    let json = localStorage.getItem('Shop_Key');
-	let ShopName = JSON.parse(json);
+    $("#pop_back").hide();
+    let ShopName = localStorage.getItem("ShopName")
+    let ShopID =0;
 
     console.log(ShopName)
 
@@ -167,10 +176,15 @@
     for(i=0;i<Shop.length;i++){
 
         if(ShopName == Shop[i]["ShopName"]){
-            let ShopID = i+1 ;
+             ShopID = i+1 ;
     
+        };
 
-    let count = 0;
+    };
+
+    localStorage.setItem("ShopID",ShopID);
+    
+    //let count = 0;
     let Menyu = DB.sql("select * from tm_food where ShopID ='"+ ShopID +"';");
 
     // ページが読み込まれたら実行
@@ -207,7 +221,7 @@
             for (let i = 0; i < Menyu.length; ++i) {
                 if (Menyu[i]["CategoryCode"] == getCategoryCode(menuId)) {
 
-                    let NewButton = $('<button data-foodname="' + Menyu[i]["FoodName"] + '">' + Menyu[i]["FoodName"] + "||" + Menyu[i]["Price"] + "円" + '</button>');
+                    let NewButton = $('<button id="'+i+'" data-foodname="' + Menyu[i]["FoodName"] + '">' + Menyu[i]["FoodName"] + "||" + Menyu[i]["Price"] + "円" + '</button>');
 
                     $("#" + menuId).append(NewButton);
 
@@ -235,6 +249,8 @@
             $("#INSERT").hide();
             $("#BACK").hide();
             $("#pop_back").hide();
+
+            window.location.reload();
         })
 
 
@@ -254,34 +270,40 @@
             // カートに入れるボタンのクリックイベント
             $("#update_ok").on("click", function () {
                 // カートに商品を追加（foodNameを配列に追加）
+
+                
+
                 cartItems.push(foodName);
+                alert(cartItems)
 
                 // 配列をローカルストレージに保存
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
                 console.log("カートに " + foodName + " を追加しました。");
 
+                window.location.reload();
+
                 // ポップアップを非表示にする
                 $("#UPDATE").hide();
                 $("#BACK").hide();
                 $("#pop_back").hide();
             });
-        }
+        };
 
         // カートの内容を表示するための関数
-        function displayCart() {
+        //function displayCart() {
 
             // ローカルストレージからカートの内容を取得
 
-            let cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+            //let cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
 
             // カートの内容を表示する処理をここに追加
             // 例: カート内の商品一覧を表示
-            console.log("カート内の商品一覧:");
-            cartItems.forEach(item => {
-                console.log(item);
-            });
-        }
+            //console.log("カート内の商品一覧:");
+            //cartItems.forEach(item => {
+               // console.log(item);
+            //});
+        //}
 
 // カートを表示するためのボタンなどの要素にクリックイベントを追加することで、カートの内容を表示できます。
 
@@ -304,9 +326,6 @@
         }
     });
 
-};
-
-};
 
 
     //店選択に戻るとデータの削除
@@ -317,8 +336,8 @@
 
             localStorage.removeItem("cartItems");
             localStorage.removeItem("Shop_Key");
+            localStorage.removeItem('myArray');
 
-    
         } else {
             return false
         }

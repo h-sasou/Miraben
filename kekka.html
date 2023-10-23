@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="DB_sql.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="GamenSeni.js"></script>
+</head>
+
+    <body>
+
     <title>注文結果表示</title>
     <h2>みら弁--注文結果表示--</h2>
-</head>
-    <body>
+
+
 
     
         <!--テーブル-->
@@ -18,19 +25,29 @@
                       <th>金額</th>
                     </tr>
                     <tr>
-                      <td>仮</td>
-                      <td>仮</td>
-                      <td>仮</td>
-                      <td>仮</td>
+                      <td id="user"></td>
+                      <td id="tyuumon"></td>
+                      <td id="some"></td>
+                      <td id="price"></td>
                     </tr>
                     <tr>
                     </tr>
                    </table></p>
                    <label>
-                   幹事は""さんです
+                   幹事は"<span id="kanji"></span>"さんです
                    </label>
                    <br>
                    <input type="button" value="メニューへ戻る">
 
     </body>
+
+    <script>
+
+      let ShopID = localStorage.getItem("ShopID")
+
+      let kekka = DB.sql("select * from te_order where ShopID = ")
+
+
+
+    </script>
 </html>
