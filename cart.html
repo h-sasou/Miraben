@@ -20,8 +20,8 @@
             <table border="1">
                 <tr>
                     <th>注文内容</th>
-                    <th>個数</th>
                     <th>金額</th>
+                    <th>個数</th>
                 </tr>
                 <tr>
                     <td id="Food"></td>
@@ -33,7 +33,7 @@
             </table>
         </p>
         <label>
-            合計金額 <input type="textbox" id="gokei">
+            合計金額 <input type="textbox" id="gokei" readonly>
         </label>
         <br>
         <input id="kakutei_Btn" type="button" value="注文確定">
@@ -48,16 +48,36 @@
 		    <button class="pop_button_alone" id="update_ok">はい</button>
 
 	    </div>
+
+        <!--幹事ポップアップ-->
+	    <div class="pop" id="kanji">
+		    <button class="pop_cancel" >✖</button>
+	      <div class="pop_title_alone">あなたが幹事です。<br>11時30分に幹事画面にて集計結果を確認し<br>代表として電話を行ってください</div>
+		    <button class="pop_button_alone" id="kanji_ok">はい</button>
+
+	    </div>
     </body>
 
     <script>
         // ポップアップの処理
        $("#UPDATE").hide();
         $("#pop_back").hide();
+        $("#kanji").hide();
+
+        let Price = [];
+        let Calorie = [];
+
+        let userID = localStorage.getItem("ID_Key");
+        let ShopName = localStorage.getItem("ShopName");
+        let ShopID = localStorage.getItem("ShopID");
+
+
+        //let oder = DB.sql("select * from ");
 
        $("#kakutei_Btn").on("click",function(){  //pop出す
              $("#UPDATE").show();
              $("#pop_back").show();
+             
        })
 
        $(".pop_cancel").on("click",function(){    //popを消す
@@ -66,18 +86,71 @@
        })
 
        $("#update_ok").on("click",function(){   //確定処理
-        $("#UPDATE").hide();
-        $("#pop_back").hide();
-       })
+            $("#UPDATE").hide();
+            $("#pop_back").hide();
+
+            
+
+            let Year =  new Date().getFullYear();
+            let Month = new Date().getMonth()+ 1;
+            let Day = new Date().getDay();
+            let Hours = new Date().getHours();
+            let Minutes = new Date().getMinutes();
+            let Seconds = new Date().getSeconds();
+
+        
+            for ( a = 0; a < array.length; a++) {
+
+                let cc = ("call UserOrder('"+userID+"','"+ShopName+"','"+array[a]+"',1,"+Price[a]+",'"+Calorie[a]+"','"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"',"+ShopID+");"); //インサート
+            
+
+                console.log(cc)
+            };
+
+            let kanji = ('SELECT * FROM te_order where OrderShopName = "'+ShopName+'" order by OrderTime;');
+
+            if(userID == kanji[0]["UserID"]){
+
+                $("#kanji").show();
+
+                $("#kanji_ok").on("click",function(){
+
+                    window.location.href = "kakutei.html";
+
+                });
+
+            }
+
+            window.location.href = "kakutei.html";
+
+        });
+
+       let count = 0;
 
         const serializedArray = localStorage.getItem('cartItems');
         const array = JSON.parse(serializedArray);
         console.log(array); // [1, 2, 3]
 
-        for (let a = 0; a < array.length; a++) {
+        let Food = DB.sql("select * from TM_Food");
+
+        for ( a = 0; a < array.length; a++) {
             // 'aa' の代わりに 'array' のデータを 'a' のインデックスで取得して表示します
             $("#Food").append('<tr>' + '<td id="Oder_T' + a + '" class="syousai">' + array[a] + '</td>' + '</tr>');
-        }
+            $("#some").append('<tr>'+'<td id="Oder_S'+1+'" class="syousai">'+"1個"+'</td>'+'</tr>');
+   
+
+            for(b=0; b<Food.length;b++){
+            
+                if(array[a]==Food[b]["FoodName"]){
+
+                    $("#Price").append('<tr>'+'<td id="Oder_P'+b+'" class="syousai">'+Food[b]["Price"]+'</tb>'+'</tr>');
+                    Price.push(Food[b]["Price"]);
+                    Calorie.push(Food[b]["calorie"]);
+                    
+
+                };
+            };
+        };
 
      </script>
 </html>

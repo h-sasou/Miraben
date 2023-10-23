@@ -51,6 +51,7 @@
     let count_search = 0;  //合致した配列の数
 
     localStorage.removeItem("Shop_Key");
+    localStorage.removeItem("ShopID");
 
 
     $("#btn").text(name[0]["ShopName"]);
@@ -149,7 +150,7 @@
         let Minutes = new Date().getMinutes();
         let Seconds = new Date().getSeconds();
 
-        let simekiri = new Date( Year, Month, Day,11, 30,0 ); // 注文締め切り
+        let simekiri = new Date( Year, Month, Day,18, 30,0 ); // 注文締め切り
 
         let saikai = new Date(Year, Month, Day,9,0,0); //再開
 
@@ -166,9 +167,8 @@
             RoadShop()
            
             let ShopName = $("#btn").text();
-	        let json = JSON.stringify(ShopName, undefined, 1);
-	        localStorage.setItem('Shop_Key', json);
-            
+	        
+            localStorage.setItem("ShopName",ShopName);
 
         };
     });
