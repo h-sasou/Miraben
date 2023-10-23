@@ -23,7 +23,7 @@ CREATE PROCEDURE UserOrder(IN InputUserID varchar(30), IN InputOrderShopName var
 BEGIN
 INSERT INTO TE_Order (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
 VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
-INSERT INTO TT_Order_Mng (ShopID, OrderID, UserID) 
+INSERT INTO TT_Order_Mng (ShopID, OrderID,UserID) 
 VALUES (InputShopID, LAST_INSERT_ID(), InputUserID);
 INSERT INTO TR_Order_Rireki (UserID, OrderShopName, OrderFoodName, some, Price, calorie, OrderTime)
 VALUES (InputUserID, InputOrderShopName, InputOrderFoodName, Inputsome, InputPrice, Inputcalorie, InputOrderTime);
