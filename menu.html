@@ -18,14 +18,14 @@
            </h2>
 
 
-        <p>
-            11時45分以降は注文はできません
+        
+           <p id="err">11時30分以降は注文はできません 
             <input type="text" id="search"  maxlength="1">
             <input type="button" value="検索" id="search_btn"><br>
-
+        </p>
 
             <input id="left_btn" type="button" value="左" >
-            <button id="btn" onclick="RoadShop()"></button>
+            <button id="btn" ></button>
             <input id="right_btn" type="button" value="右">
            
 
@@ -50,6 +50,8 @@
 
     let count_search = 0;  //合致した配列の数
 
+    localStorage.removeItem("Shop_Key");
+
 
     $("#btn").text(name[0]["ShopName"]);
 
@@ -66,14 +68,13 @@
     $("#left_btn").prop('disabled',true);
 
 //初期表示------------------------------------------------------------------------------------------------------------------------------------------
+
+
  
     $("#left_btn").on("click",function(){    //右ボタン押下
 
-        if(furagu == 0){
-    
-            if(count == 0){
-                $("#left_btn").prop('disabled',true);
-            }else{
+        if(furagu == 0){    
+
                 $("#right_btn").prop('disabled',false);
                 count--;
                 $("#btn").text(name[count]["ShopName"]);
@@ -82,28 +83,25 @@
                 $("#Nun").text(name[count]["TelNum"]);
                 $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
                 youbi(count);
-              
-            };
-        }
+                if(count == 0){
+                    $("#left_btn").prop('disabled',true);
+                }
+            
+        }else{     //検索後
 
-        //検索後
-
-        if(furagu == 1){
-
-            if(hyouji[count_search] == 0){
-                $("#left_btn").prop('disabled',true);
-            }else{
                 $("#right_btn").prop('disabled',false);
-                hyouji[count_search]++
-                $("#btn").text(name[hyouji[count_search]]["ShopName"]);
-                $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
-                $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
-                $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
-                $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
-                youbi(hyouji[count_search]);
+                count--;
+                $("#btn").text(name[hyouji[count]]["ShopName"]);
+                $("#Shop").text(name[hyouji[count]]["ShopName"]);
+                $("#Js").text(name[hyouji[count]]["ShopKen"]+name[hyouji[count]]["ShopShi"]+name[hyouji[count]]["ShopTyo"]+name[hyouji[count]]["ShopBill"]);
+                $("#Nun").text(name[hyouji[count]]["TelNum"]);
+                $("#Time").text(name[hyouji[count]]["EigyouStart"]+'~'+name[hyouji[count]]["EigyouEnd"]);
+                youbi(hyouji[count]);
                 furagu = 1;
+                if(count == 0){
+                    $("#left_btn").prop('disabled',true);
+                }
                 
-            };
         };
 
     });  
@@ -112,9 +110,6 @@
 
         if(furagu == 0){
         
-            if(count == name.length-1){
-                $("#right_btn").prop('disabled',true);
-            }else{
                 $("#left_btn").prop('disabled',false);
                 count++;
                 $("#btn").text(name[count]["ShopName"]);
@@ -123,27 +118,61 @@
                 $("#Nun").text(name[count]["TelNum"]);
                 $("#Time").text(name[count]["EigyouStart"]+'~'+name[count]["EigyouEnd"]);
                 youbi(count);
-            };
-        };
-
-        //検索後
-
-        if(furagu == 1){
-
-            if(hyouji[count_search] == count_search){
+                if(count == name.length-1){
                     $("#right_btn").prop('disabled',true);
-            }else{
+                }
+
+        }else{      //検索後
+
                 $("#left_btn").prop('disabled',false);
-                hyouji[count_search]--
-                $("#btn").text(name[hyouji[count_search]]["ShopName"]);
-                $("#Shop").text(name[hyouji[count_search]]["ShopName"]);
-                $("#Js").text(name[hyouji[count_search]]["ShopKen"]+name[hyouji[count_search]]["ShopShi"]+name[hyouji[count_search]]["ShopTyo"]+name[hyouji[count_search]]["ShopBill"]);
-                $("#Nun").text(name[hyouji[count_search]]["TelNum"]);
-                $("#Time").text(name[hyouji[count_search]]["EigyouStart"]+'~'+name[hyouji[count_search]]["EigyouEnd"]);
-                youbi(hyouji[count_search]);
-            };
+                count++;
+                $("#btn").text(name[hyouji[count]]["ShopName"]);
+                $("#Shop").text(name[hyouji[count]]["ShopName"]);
+                $("#Js").text(name[hyouji[count]]["ShopKen"]+name[hyouji[count]]["ShopShi"]+name[hyouji[count]]["ShopTyo"]+name[hyouji[count]]["ShopBill"]);
+                $("#Nun").text(name[hyouji[count]]["TelNum"]);
+                $("#Time").text(name[hyouji[count]]["EigyouStart"]+'~'+name[hyouji[count]]["EigyouEnd"]);
+                youbi(hyouji[count]);
+                if(hyouji.length-1 == count){
+                    $("#right_btn").prop('disabled',true);
+                }
         };
     });   
+
+
+
+    $("#btn").on("click", function () {
+
+        let Year =  new Date().getFullYear();
+        let Month = new Date().getMonth()+ 1;
+        let Day = new Date().getDay();
+        let Hours = new Date().getHours();
+        let Minutes = new Date().getMinutes();
+        let Seconds = new Date().getSeconds();
+
+        let simekiri = new Date( Year, Month, Day,11, 30,0 ); // 注文締め切り
+
+        let saikai = new Date(Year, Month, Day,9,0,0); //再開
+
+        let Today = new Date (Year,Month,Day,Hours,Minutes,Seconds);
+
+        if(simekiri < Today ){   //11時３０を過ぎたらボタン押下不可
+
+            $("#btn").prop('disabled',true);
+            $("#err").css("color","red");
+            
+        }else if(saikai < Today ){    //０時０分を過ぎたら再開
+
+            $("#btn").prop('disabled',false);
+            RoadShop()
+           
+            let ShopName = $("#btn").text();
+	        let json = JSON.stringify(ShopName, undefined, 1);
+	        localStorage.setItem('Shop_Key', json);
+            
+
+        };
+    });
+
 
 //検索機能--------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -178,13 +207,15 @@
                 };
             };
 
-            $("#btn").text(name[hyouji[count_search-1]]["ShopName"]);
-            $("#Shop").text(name[hyouji[count_search-1]]["ShopName"]);
-            $("#Js").text(name[hyouji[count_search-1]]["ShopKen"]+name[hyouji[count_search-1]]["ShopShi"]+name[hyouji[count_search-1]]["ShopTyo"]+name[hyouji[count_search-1]]["ShopBill"]);
-            $("#Nun").text(name[hyouji[count_search-1]]["TelNum"]);
-            $("#Time").text(name[hyouji[count_search-1]]["EigyouStart"]+'~'+name[hyouji[count_search-1]]["EigyouEnd"]);
-            youbi(hyouji[count_search-1]);
+            $("#btn").text(name[hyouji[0]]["ShopName"]);
+            $("#Shop").text(name[hyouji[0]]["ShopName"]);
+            $("#Js").text(name[hyouji[0]]["ShopKen"]+name[hyouji[0]]["ShopShi"]+name[hyouji[0]]["ShopTyo"]+name[hyouji[0]]["ShopBill"]);
+            $("#Nun").text(name[hyouji[0]]["TelNum"]);
+            $("#Time").text(name[hyouji[0]]["EigyouStart"]+'~'+name[hyouji[0]]["EigyouEnd"]);
+            youbi(hyouji[0]);
             furagu = 1;
+            count = 0;
+            $("#left_btn").prop('disabled',false);
 
         }else{
 
@@ -195,57 +226,30 @@
             $("#Time").text(name[0]["EigyouStart"]+'~'+name[0]["EigyouEnd"]);
             youbi(0);
             furagu = 0;
+            count = 0;
+            $("#right_btn").prop('disabled',false);
         };
     });
 
-
-
-//１１時30分に締め切り-------------------------------------------------------------------------------------------------------------------------------
-
-
-    let Year =  new Date().getFullYear();
-    let Month = new Date().getMonth()+ 1;
-    let Day = new Date().getDay();
-    let Hours = new Date().getHours();
-    let Minutes = new Date().getMinutes();
-    let Seconds = new Date().getSeconds();
-
-    const simekiri = new Date( Year, Month, Day,11, 30,0 ); // 注文締め切り
-
-    const saikai = new Date(Year, Month, Day,0,0,0); //再開
-
-    let Today = new Date (Year,Month,Day,Hours,Minutes,Seconds);
-
-    if(simekiri < Today ){   //11時３０を過ぎたらボタン押下不可
-
-        $("#btn").prop('disabled',true);
-
-    };
-
-
-    if(saikai < Today ){    //０時０分を過ぎたら再開
-
-        $("#btn").prop('disabled',false);
-
-    };
-
-
+    
 //-----------------------------------------商品受け取り処理------------------------------------------------------
 
     let userID = localStorage.getItem("ID_Key")
 
-    let get = DB.sql('call Receive('+userID+')');
+    console.log(userID)
 
-    console.log(get)
+    //let get = DB.sql('call Receive('+userID+')');
 
-    let user = DB.sql("select * from tm_")
+    //console.log(get)
 
-    for(a=0;a<get.length;++a){
+    //let user = DB.sql("select * from tm_")
 
-        if(get[a][""]){}
-    }
+    //for(a=0;a<get.length;++a){
 
-    if(get[""]["pickFlg"]== 0);
+        //if(get[a][""]){}
+    //}
+
+   // if(get[""]["pickFlg"]== 0);
 
 
 

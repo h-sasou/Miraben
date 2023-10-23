@@ -69,24 +69,27 @@
         //画面の処理
         $("#UPDATE").hide();
         $("#pop_back").hide();
+        localStorage.removeItem("ID_Key");
+        localStorage.removeItem("Shop_Key");
 
-        $(window).on('load', function (){    //画面読み込み時、アプリ側が操作していたらログイン不可
+           //画面読み込み時、アプリ側が操作していたらログイン不可
 
             let kanri = DB.sql("SELECT * FROM TP_Control;");
 
-            if(kanri[0]["LoginControl"] == 0){ 
+            if(kanri!=null&&kanri.length!=0){
+                if(kanri[0]["LoginControl"] == 1){ 
 
-                $("#UPDATE").show();
-		        $("#pop_back").show();
+                    $("#UPDATE").show();
+		            $("#pop_back").show();
 
-            }else{
+                }else{
 
-                $("#UPDATE").hide();
-                $("#pop_back").hide();
+                    $("#UPDATE").hide();
+                    $("#pop_back").hide();
 
-            };
+                };
 
-        });
+            }
 
 
         //ログイン処理
@@ -118,11 +121,11 @@
 
                                 let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
 
-                                localStorage.setItem("ID_Key",user_ID+"@ciel.japan");   // ---------------------------------本当は@ciel-japan-jp！！！！！！！！！！！！
+                                localStorage.setItem("ID_Key",user_ID);  
                             
                                 RoadMenu();    //画面遷移
 
-                            }else if(!user_PS == user[j]["PassWord"]){   //パスワードが違う
+                            }else{   //パスワードが違う
 
                                 $("#err").text("入力に間違いがあります"); 
 
