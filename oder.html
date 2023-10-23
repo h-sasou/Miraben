@@ -157,10 +157,21 @@
 
 <script>
 
+    let json = localStorage.getItem('Shop_Key');
+	let ShopName = JSON.parse(json);
 
+    console.log(ShopName)
+
+    let Shop = DB.sql("select * from tm_shop_mng;");
+
+    for(i=0;i<Shop.length;i++){
+
+        if(ShopName == Shop[i]["ShopName"]){
+            let ShopID = i+1 ;
+    
 
     let count = 0;
-    let Menyu = DB.sql("select * from TM_Food where "+localStorage.getItem("Shop_Key")+"ORDER BY Calorie;");
+    let Menyu = DB.sql("select * from tm_food where ShopID ='"+ ShopID +"';");
 
     // ページが読み込まれたら実行
     $(document).ready(function () {
@@ -293,6 +304,10 @@
         }
     });
 
+};
+
+};
+
 
     //店選択に戻るとデータの削除
 
@@ -301,6 +316,7 @@
         if (confirm('注文したデータが消えます')) {
 
             localStorage.removeItem("cartItems");
+            localStorage.removeItem("Shop_Key");
 
     
         } else {

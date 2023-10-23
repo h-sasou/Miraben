@@ -50,6 +50,7 @@
 
     let count_search = 0;  //合致した配列の数
 
+    localStorage.removeItem("Shop_Key");
 
 
     $("#btn").text(name[0]["ShopName"]);
@@ -150,7 +151,7 @@
 
         let simekiri = new Date( Year, Month, Day,11, 30,0 ); // 注文締め切り
 
-        let saikai = new Date(Year, Month, Day,23,59,59); //再開
+        let saikai = new Date(Year, Month, Day,9,0,0); //再開
 
         let Today = new Date (Year,Month,Day,Hours,Minutes,Seconds);
 
@@ -159,15 +160,15 @@
             $("#btn").prop('disabled',true);
             $("#err").css("color","red");
             
-        };
-
-
-        if(saikai < Today ){    //０時０分を過ぎたら再開
+        }else if(saikai < Today ){    //０時０分を過ぎたら再開
 
             $("#btn").prop('disabled',false);
-            //RoadShop()
-            console.log(localStorage.setItem("Shop_Key",$("#btn").text()));
-
+            RoadShop()
+           
+            let ShopName = $("#btn").text();
+	        let json = JSON.stringify(ShopName, undefined, 1);
+	        localStorage.setItem('Shop_Key', json);
+            
 
         };
     });
@@ -214,7 +215,8 @@
             youbi(hyouji[0]);
             furagu = 1;
             count = 0;
-            $("#right_btn").prop('disabled',false);
+            $("#left_btn").prop('disabled',false);
+
         }else{
 
             $("#btn").text(name[0]["ShopName"]);
