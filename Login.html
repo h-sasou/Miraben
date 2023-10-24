@@ -95,7 +95,7 @@
         //ログイン処理
 
         
-        let user = DB.sql("select * from tm_user;");
+        let user = DB.sql("SELECT * FROM TM_User;");
 
         $("#login").on("click", function(){
 
@@ -106,22 +106,25 @@
 
                 for(i=0; i < user.length; ++i){
 
-                    if(user_ID == user[i]["UserID"]){  //ユーザーIDのチェック
+                    if(user_PS == user[i]["PassWord"]){  //ユーザーIDのチェック
 
                         for(j=0; j <user.length; ++j){
 
-                            if(user_PS == user[j]["PassWord"]){  //ユーザーパスワードのチェック
+                            if(user_ID == user[j]["UserID"]){  //ユーザーパスワードのチェック
+
+                                let username = user[j]["UserName"];
                                  
                                 let Year =  new Date().getFullYear();
                                 let Month = new Date().getMonth()+ 1;
-                                let Day = new Date().getDay();
+                                let Day = new Date().getDate();
                                 let Hours = new Date().getHours();
                                 let Minutes = new Date().getMinutes();
                                 let Seconds = new Date().getSeconds();
 
-                                let Login =DB.sql("call UserLogin('" + user_ID + "', '" + Year + "-" + Month + "-" + Day +" "+ Hours + ":" + Minutes + ":" + Seconds + "');");
+                                //DB.sql("call UserLogin('"+user_ID+"','"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"');");
 
-                                localStorage.setItem("ID_Key",user_ID);  
+                                localStorage.setItem("ID_Key",user_ID);
+                                localStorage.setItem("UserName",username);
                             
                                 RoadMenu();    //画面遷移
 

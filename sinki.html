@@ -23,7 +23,7 @@
 
             <label for="UserID">
                 ユーザーID:
-                <input type="text" id="userID" maxlength="20" >
+                <input type="text" id="userID" maxlength="20" ><span>@ciel-japan.jp</span>
                
                 
             </label>
@@ -52,22 +52,6 @@
         <script>
 
             let user = DB.sql("select * from tm_user;");
-
-             $("#touroku").on("click", function(){
-
-                let user_ID = $("#userID").val();
-                    for(i=0; i < user.length; ++i){
-
-                        if(user_ID == user[i]["UserID"]){
-                             console.log ("ooo");
-
-                        }
-                    
-                        
-                    }
-                   
-                
-             });
             
 
             $("#pass").ready(function(){  //パスワードのチェック
@@ -90,6 +74,47 @@
 
                 });
             });
+
+
+        $("#login").on("click", function(){
+
+            let user_ID = $("#userID").val()+"@ciel-japan.jp";
+            let user_PS = $("#pass").val();
+            let user_NM = $("#username").val();
+
+            if(!$("#username").val() == "" && !$("#userID").val() == "" && !$("#pass").val() == "" && !$("#pass+").val() == ""){
+
+
+                for(i=0; i < user.length; ++i){
+
+                    if(user_ID == user[i]["UserID"]){  //ユーザーIDのチェック
+
+                       if($("#pass").val()!=$("#pass+").val()){
+
+                        $("#err").text("確認用のパスワードが違います"); 
+
+
+                       }else{
+
+                        DB.sql("INSERT INTO TM_User VALUES ('"+userID+"', '"+userNM+"', '"+userPS+"');");
+
+                       };
+                        
+                       
+                    }else{
+
+                        $("#err").text("入力されたユーザーIDは存在しません"); 
+            
+                    };
+                };
+
+                
+            }else{
+
+                $("#err").text("入力してください"); 
+
+            };
+        });
 
         </script>
 </html>

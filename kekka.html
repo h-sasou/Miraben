@@ -43,11 +43,36 @@
 
     <script>
 
-      let ShopID = localStorage.getItem("ShopID")
+      let ShopName = localStorage.getItem("ShopName");
+      let userID = localStorage.getItem("ID_Key");
 
-      let kekka = DB.sql("select * from te_order where ShopID = ")
+      let kekka = ("SELECT * FROM TE_Order WHERE OrderShopName = "+ShopName+" ORDER BY OrderTime");
+
+      let user = ("SELECT * FROM TM_User");
+
+      for(i=0; i<kekka.length;i++){
+
+        $("#tyuumon").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +ShopName + kekka[i]["OrderFoodName"]+ '</td>' + '</tr>')
+        $("#some").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' + "1個" + '</td>' + '</tr>')
+        $("#price").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +kekka[i]["Price"]+ '</td>' + '</tr>')
+
+          for(j=0;j<user.length;j++){
+
+            if(kekka[i]["UserID"] == user[j]["UserID"]){
+
+              $("#user").append('<tr>' + '<td id="Kekka_U' + j + '" class="syousai">' +user[j]["UserName"]  + '</td>' + '</tr>')
+
+              if(kekka[i]["UserID"] == user[j]["UserID"]){
+
+                $("#kanji").text(user[j]["UserName"])
+              }
+            }
+
+          }
+
+      }
 
 
-
+     
     </script>
 </html>

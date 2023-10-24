@@ -171,7 +171,7 @@
 
     console.log(ShopName)
 
-    let Shop = DB.sql("select * from tm_shop_mng;");
+    let Shop = DB.sql("ELECT * FROM TM_Shop_Mng;");
 
     for(i=0;i<Shop.length;i++){
 
@@ -185,7 +185,7 @@
     localStorage.setItem("ShopID",ShopID);
     
     //let count = 0;
-    let Menyu = DB.sql("select * from tm_food where ShopID ='"+ ShopID +"';");
+    let Menyu = DB.sql("SELECT * FROM TM_Food WHERE ShopID ='"+ ShopID +"';");
 
     // ページが読み込まれたら実行
     $(document).ready(function () {
@@ -274,7 +274,7 @@
                 
 
                 cartItems.push(foodName);
-                alert(cartItems)
+                
 
                 // 配列をローカルストレージに保存
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -335,7 +335,7 @@
         if (confirm('注文したデータが消えます')) {
 
             localStorage.removeItem("cartItems");
-            localStorage.removeItem("Shop_Key");
+            localStorage.removeItem("ShopName");
             localStorage.removeItem('myArray');
 
         } else {

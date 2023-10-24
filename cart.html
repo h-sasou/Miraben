@@ -107,7 +107,7 @@
                 console.log(cc)
             };
 
-            let kanji = ('SELECT * FROM te_order where OrderShopName = "'+ShopName+'" order by OrderTime;');
+            let kanji = ('SELECT * FROM TE_Order WHERE OrderShopName = "'+ShopName+'" ORDER BY OrderTime;');
 
             if(userID == kanji[0]["UserID"]){
 
@@ -131,7 +131,7 @@
         const array = JSON.parse(serializedArray);
         console.log(array); // [1, 2, 3]
 
-        let Food = DB.sql("select * from TM_Food");
+        let Food = DB.sql("SELECT * FROM TM_Food");
 
         for ( a = 0; a < array.length; a++) {
             // 'aa' の代わりに 'array' のデータを 'a' のインデックスで取得して表示します

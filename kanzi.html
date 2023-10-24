@@ -23,11 +23,11 @@
                 <th>料金支払い</th>
             </tr>
             <tr>
-                <td id="user">仮</td>
-                <td id="tyuumonn">仮</td>
-                <td id="kinngaku">仮</td>
-                <td id="get">仮</td>
-                <td id="pay"><input type="checkbox"></td>
+                <td id="user"></td>
+                <td id="tyuumonn"></td>
+                <td id="kinngaku"></td>
+                <td id="get"></td>
+                <td id="pay"><input id="paypay" type="checkbox"></td>
             </tr>
             <tr>
             </tr>
@@ -45,29 +45,45 @@
 
     <script>
 
-        let kanji = DB.sql("call OrderLeader('1');")
+        let ShopID = localStorage.getItem("ShopID");
+
+        let kanji = DB.sql("call OrderLeader("+ShopID+");");
 
         for(a=0;a<kanji.length;++a){
 
-            $("#user").append('<tr>' + '<td id="user' + a + '" class="syousai">' + kanji[a][""] + '</td>' + '</tr>')
+            $("#user").append('<tr>' + '<td id="user' + a + '" class="syousai">' + kanji[a]["UserName"] + '</td>' + '</tr>')
 
         };
 
         for(b=0;b<kanji.length;++b){
 
-            $("#tyuumonn").append('<tr>' + '<td id="tyuumonn' + b + '" class="syousai">' + kanji[b][""] +kanji[b][""]+kanji[b][""]+'</td>' + '</tr>')
+            $("#tyuumonn").append('<tr>' + '<td id="tyuumonn' + b + '" class="syousai">' + kanji[b]["OrderShopName"] +kanji[b]["OrderFoodName"]+kanji[b]["some"]+"個"+'</td>' + '</tr>')
 
         };
 
         for(c=0;c<kanji.length;++c){
 
-            $("#kinngaku").append('<tr>' + '<td id="kinngaku' + c + '" class="syousai">' + kanji[c][""] + "円" +'</td>' + '</tr>')
+            $("#kinngaku").append('<tr>' + '<td id="kinngaku' + c + '" class="syousai">' + kanji[c]["Price"] + "円" +'</td>' + '</tr>')
 
         };
 
         for(d=0;d<kanji.length;++d){
 
-            $("#get").append('<tr>' + '<td id="kinngaku' + c + '" class="syousai">' + "未" +'</td>' + '</tr>')
+            if(kanji[d]["pickFlg"] ==0){
+
+            $("#get").append('<tr>' + '<td id="get' + d + '" class="syousai">' + "未" +'</td>' + '</tr>');
+
+            }else if(kanji[d]["pickFlg"] ==1){
+                
+                $("#get").append('<tr>' + '<td id="get' + d + '" class="syousai">' + "済" +'</td>' + '</tr>')
+
+            };
+
+        };
+
+        for(d=0;d<kanji.length;++d){
+
+            $("#pay").append('<tr>' + '<input id = "paypay'+d+'" type="checkbox"></tr>');
 
         };
 
@@ -75,13 +91,24 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        function kakuninn(nun){
+        $("#paypay").click(function(){  //チェックボックスにチェックしていたら
 
-            if(kanji[nun]["MngFlg"] == 0){
+            for(e=0;e<kanji.length;++e){
 
-                $("#get"+nun).text("済")
+            
+                if($('#').prop('checked')){
 
-            };
-        };
+                    alert('checked!');
+
+                }else{
+
+                    alert('not checked!');
+            
+                };
+            }
+
+
+        })
+       
     </script>
 </html>
