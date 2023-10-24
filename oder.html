@@ -171,7 +171,7 @@
 
     console.log(ShopName)
 
-    let Shop = DB.sql("ELECT * FROM TM_Shop_Mng;");
+    let Shop = DB.sql("SELECT * FROM TM_Shop_Mng;");
 
     for(i=0;i<Shop.length;i++){
 
@@ -337,6 +337,8 @@
             localStorage.removeItem("cartItems");
             localStorage.removeItem("ShopName");
             localStorage.removeItem('myArray');
+            localStorage.removeItem("ShopID");
+            localStorage.removeItem("UserName");
 
         } else {
             return false

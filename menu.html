@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html>
  <head>
-	 <meta charset="utf-8" />
- 	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  	 <script src="DB_sql.js"></script>
-  	 <script type="text/javascript" src="GamenSeni.js"></script>
-     <link rel="stylesheet" href="menu.css" type="text/css">
-    <script src="https://unpkg.com/wanakana"></script>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="DB_sql.js"></script>
+     <script type="text/javascript" src="GamenSeni.js"></script>
+   <link rel="stylesheet" href="menu.css" type="text/css">
+  <script src="https://unpkg.com/wanakana"></script>
 
  </head>
    
  <body>
-     <h2>
-         <a class="logo">みら弁--メニュー--</a>
-        <input type="button" class="button" value="マイページ" onclick="RoadMypage()">
-        <input type="button" class="button" value="幹事" onclick="Roadkanzi()">
-        <input type="button" class="button" id="uketori" value="商品受け取り">
-           </h2>
+    <h2>
+        <a class="logo">みら弁--メニュー--</a>
+       <input type="button" class="button" id="my" value="マイページ" onclick="RoadMypage()"disabled>
+       <input type="button" class="button" id="kanji" value="幹事" onclick="Roadkanzi()"disabled>
+       <input type="button" class="button" id="uketori" value="商品受け取り"disabled>
+          </h2>
 
 
-        
-           <p id="err">
-        11時30分以降は注文はできません
-        <input type="text" id="search" maxlength="1">
-        <input type="button" value="検索" id="search_btn">
-    </p>
+       
+          <p id="err">
+       11時30分以降は注文はできません
+       <input type="text" id="search" maxlength="1">
+       <input type="button" value="検索" id="search_btn">
+   </p>
 
-    <div class="arrow-container">
-        <input class="arrow" id="left_btn" type="button" value="＜">
-        <button class="arrow" id="btn"></button>
-        <input class="arrow" id="right_btn" type="button" value="＞">
-        
-        <table width="40%" order="1">
-            <br>
+   <div class="arrow-container">
+       <input class="arrow" id="left_btn" type="button" value="＜">
+       <button class="arrow" id="btn"></button>
+       <input class="arrow" id="right_btn" type="button" value="＞">
+       
+       <table width="40%" order="1">
+           <br>
 
-            <tr><th>店名</th>           <td id="Shop"></td></tr>
-            <tr><th>住所</th>           <td id="Js"></td></tr>
-            <tr><th>電話番号</th>       <td id="Nun"></td></tr>
-            <tr><th>営業時間</th>       <td id="Time"></td></tr>
-            <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>
+           <tr><th>店名</th>           <td id="Shop"></td></tr>
+           <tr><th>住所</th>           <td id="Js"></td></tr>
+           <tr><th>電話番号</th>       <td id="Nun"></td></tr>
+           <tr><th>営業時間</th>       <td id="Time"></td></tr>
+           <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>
 
-        </table>
+       </table>
 
-    </div>
- </body>
+   </div>
+</body>
  <script>
 
     let count = 0;
@@ -53,11 +53,6 @@
     let furagu = 0;  //検索ボタン押したかのフラグ
 
     let count_search = 0;  //合致した配列の数
-
-    localStorage.removeItem("ShopName");
-    localStorage.removeItem("ShopID");
-    localStorage.removeItem("UserName");
-
 
 
     $("#btn").text(name[0]["ShopName"]);
@@ -75,7 +70,6 @@
     $("#left_btn").prop('disabled',true);
 
 //初期表示------------------------------------------------------------------------------------------------------------------------------------------
-
 
  
     $("#left_btn").on("click",function(){    //右ボタン押下
@@ -209,7 +203,6 @@
                     console.log(hyouji[count_search])
                     count_search++;
                     
-                    
                 };
             };
 
@@ -242,7 +235,7 @@
 
     let userID = localStorage.getItem("ID_Key")   
 
-    let user = DB.sql("SELECT * FROM TE_Order");
+    let user = DB.sql("SELECT * FROM TE_Order ORDER BY OrderTime");
 
     for(a=0;a<user.length;++a){
 
@@ -261,10 +254,31 @@
     $("#uketori").on("click",function(){
 
         DB.sql("call Receive('"+userID+"');");
-        $("#uketori").css("color","white");
+        $("#uketori").css("color","brack");
         $("#uketori").prop('disabled',true);
 
     });
+//-------------------------------kanji----------------------------------------------------------------------------------
+
+
+    if(user[0]["UserID"] == userID){
+
+        $("#kanji").prop('disabled',false);
+
+    }else{
+
+        $("#kanji").prop('disabled',true);
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -315,5 +329,7 @@
         }  
     
     }
+
+   
  </script>
 </html>

@@ -37,41 +37,55 @@
                    幹事は"<span id="kanji"></span>"さんです
                    </label>
                    <br>
-                   <input type="button" value="メニューへ戻る">
+                   <input id="menyu" type="button" value="メニューへ戻る">
 
     </body>
 
     <script>
 
+      let Year =  new Date().getFullYear();
+      let Month = new Date().getMonth()+ 1;
+      let Day = new Date().getDate();
+      let Hours = new Date().getHours();
+      let Minutes = new Date().getMinutes();
+      let Seconds = new Date().getSeconds();
+
+
       let ShopName = localStorage.getItem("ShopName");
       let userID = localStorage.getItem("ID_Key");
 
-      let kekka = ("SELECT * FROM TE_Order WHERE OrderShopName = "+ShopName+" ORDER BY OrderTime");
+      let kekka = DB.sql("SELECT * FROM TE_Order WHERE OrderShopName = '"+ShopName+"',OrderTime = '"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"' ORDER BY OrderTime");
 
-      let user = ("SELECT * FROM TM_User");
+      let user = DB.sql("SELECT * FROM TM_User");
 
-      for(i=0; i<kekka.length;i++){
+      for(i=0; i<kekka.length;++i){
 
-        $("#tyuumon").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +ShopName + kekka[i]["OrderFoodName"]+ '</td>' + '</tr>')
-        $("#some").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' + "1個" + '</td>' + '</tr>')
-        $("#price").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +kekka[i]["Price"]+ '</td>' + '</tr>')
+        $("#tyuumon").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +kekka[i]["OrderShopName"]+ kekka[i]["OrderFoodName"]+ '</td>' + '</tr>');
+        $("#some").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' + kekka[i]["some"] + '</td>' + '</tr>');
+        $("#price").append('<tr>' + '<td id="Kekka_U' + i + '" class="syousai">' +kekka[i]["Price"]+ '</td>' + '</tr>');
 
-          for(j=0;j<user.length;j++){
+        for(j=0;j<user.length;++j){
 
-            if(kekka[i]["UserID"] == user[j]["UserID"]){
+          if(kekka[i]["UserID"] == user[j]["UserID"]){
 
-              $("#user").append('<tr>' + '<td id="Kekka_U' + j + '" class="syousai">' +user[j]["UserName"]  + '</td>' + '</tr>')
+            $("#user").append('<tr>' + '<td id="Kekka_U' + j + '" class="syousai">' +user[j]["UserName"]  + '</td>' + '</tr>');
 
               if(kekka[i]["UserID"] == user[j]["UserID"]){
 
-                $("#kanji").text(user[j]["UserName"])
+                $("#kanji").text(user[j]["UserName"]);
+
               }
-            }
 
           }
+        }
 
       }
 
+      $("#menyu").on("click",function(){
+
+        window.location.href = "menu.html"
+
+      });
 
      
     </script>

@@ -27,7 +27,7 @@
                 <td id="tyuumonn"></td>
                 <td id="kinngaku"></td>
                 <td id="get"></td>
-                <td id="pay"><input id="paypay" type="checkbox"></td>
+                <td id="pay"><input id = "paypay" type="checkbox"></td>
             </tr>
             <tr>
             </tr>
@@ -37,7 +37,7 @@
         <input type="textbox">
         <br>
         <input type="button" value="戻る" onclick="RoadMenu()">
-        <input type="button" value="完了">
+        <input id="ryou" type="button" value="完了">
 
         <script type="text/javascript" src="GamenSeni.js"></script>
     </body>
@@ -95,20 +95,28 @@
 
             for(e=0;e<kanji.length;++e){
 
-            
-                if($('#').prop('checked')){
+                if($('#paypay'+e).prop('checked')){
 
-                    alert('checked!');
+                    for(f=0;f<kanji.length;++f){
+
+                        if(kanji[f]["pickFlg"] == 1){
+
+                            $("#ryou").show();
+
+                        }else{
+
+                            $("#ryou").hide();
+
+                        };
+                    };
 
                 }else{
 
-                    alert('not checked!');
+                    $("#ryou").hide();
             
                 };
-            }
-
-
-        })
+            };
+        });
        
     </script>
 </html>

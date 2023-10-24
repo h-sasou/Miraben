@@ -32,22 +32,35 @@
     <br>
     <label>上記の注文が確定しました</label>
     <br>
-    <input type="button" value="OK">
+    <input id="OK" type="button" value="OK">
 
 
     <script>
 
         let userID = localStorage.getItem("ID_Key");
+        let ShopID = localStorage.getItem("ShopID");
+        let ShopName = localStorage.getItem("ShopName");
 
-        let name = DB.sql("select * from ");//データベース取得
+        let name = DB.sql("select * from TE_Order");//データベース取得
 
         // テーブルにデータを表示
         for (a = 0; a < name.length; a++) {
-            $("#Food1").append('<tr>' + '<td id="Food_N' + a + '" class="syousai" colspan="2">' + name[a]["ShopName"] + '</td>' + '<td>' + name[a]["FoodName"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
-            $("#some").append('<tr>' + '<td id="Food_S' + a + '" class="syousai">' + name[a]["some"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
-            $("#Price").append('<tr>' + '<td id="Food_P' + a + '" class="syousai">' + name[a]["Price"] + '円' + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+
+            if(userID == name[a]["UserID"]){
+
+                $("#Food1").append('<tr>' + '<td id="Food_N' + a + '" class="syousai" colspan="2">' + ShopName + '</td>' + '<td>' + name[a]["OrderFoodName"] + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+                $("#some").append('<tr>' + '<td id="Food_S' + a + '" class="syousai">' + name[a]["some"] +'個'+ '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+                $("#Price").append('<tr>' + '<td id="Food_P' + a + '" class="syousai">' + name[a]["Price"] + '円' + '</td>' + '</tr>');     //[""]のなかにDB名を入れれば表示されるはず。
+
+            }
         }
 
+
+        $("#OK").on("click",function(){
+
+            window.location.href = "kekka.html"
+
+        })
     
     </script>
 </body>

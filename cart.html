@@ -51,10 +51,8 @@
 
         <!--幹事ポップアップ-->
 	    <div class="pop" id="kanji">
-		    <button class="pop_cancel" >✖</button>
 	      <div class="pop_title_alone">あなたが幹事です。<br>11時30分に幹事画面にて集計結果を確認し<br>代表として電話を行ってください</div>
 		    <button class="pop_button_alone" id="kanji_ok">はい</button>
-
 	    </div>
     </body>
 
@@ -89,25 +87,22 @@
             $("#UPDATE").hide();
             $("#pop_back").hide();
 
-            
-
             let Year =  new Date().getFullYear();
             let Month = new Date().getMonth()+ 1;
-            let Day = new Date().getDay();
+            let Day = new Date().getDate();
             let Hours = new Date().getHours();
             let Minutes = new Date().getMinutes();
-            let Seconds = new Date().getSeconds();
+            let Seconds = new Date().getSeconds(); 
 
         
             for ( a = 0; a < array.length; a++) {
 
-                let cc = ("call UserOrder('"+userID+"','"+ShopName+"','"+array[a]+"',1,"+Price[a]+",'"+Calorie[a]+"','"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"',"+ShopID+");"); //インサート
-            
+                let cc = ("call UserOrder('"+userID+"','"+ShopName+"','"+array[a]+"','1',"+Price[a]+",'"+Calorie[a]+"','"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"',"+ShopID+");"); //インサート
 
                 console.log(cc)
             };
 
-            let kanji = ('SELECT * FROM TE_Order WHERE OrderShopName = "'+ShopName+'" ORDER BY OrderTime;');
+            let kanji = DB.sql('SELECT * FROM TE_Order WHERE OrderShopName = "'+ShopName+'" ORDER BY OrderTime;');
 
             if(userID == kanji[0]["UserID"]){
 
@@ -119,9 +114,11 @@
 
                 });
 
-            }
+            }else{
 
-            window.location.href = "kakutei.html";
+                window.location.href = "kakutei.html";
+
+            }
 
         });
 
@@ -147,7 +144,6 @@
                     Price.push(Food[b]["Price"]);
                     Calorie.push(Food[b]["calorie"]);
                     
-
                 };
             };
         };
