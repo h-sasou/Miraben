@@ -5,40 +5,44 @@
  	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   	 <script src="DB_sql.js"></script>
   	 <script type="text/javascript" src="GamenSeni.js"></script>
+     <link rel="stylesheet" href="menu.css" type="text/css">
     <script src="https://unpkg.com/wanakana"></script>
 
  </head>
    
  <body>
-           <h2>
-            みら弁--メニュー--
-            <input type="button" value="マイページ"onclick="RoadMypage()">
-            <input type="button" value="幹事"onclick="Roadkanzi()">
-            <input id="uketori" type="button" value="商品受け取り"  disabled>
+     <h2>
+         <a class="logo">みら弁--メニュー--</a>
+        <input type="button" class="button" value="マイページ" onclick="RoadMypage()">
+        <input type="button" class="button" value="幹事" onclick="Roadkanzi()">
+        <input type="button" class="button" id="uketori" value="商品受け取り">
            </h2>
 
 
         
-           <p id="err">11時30分以降は注文はできません 
-            <input type="text" id="search"  maxlength="1">
-            <input type="button" value="検索" id="search_btn"><br>
-        </p>
+           <p id="err">
+        11時30分以降は注文はできません
+        <input type="text" id="search" maxlength="1">
+        <input type="button" value="検索" id="search_btn">
+    </p>
 
-            <input id="left_btn" type="button" value="左" >
-            <button id="btn" ></button>
-            <input id="right_btn" type="button" value="右">
-           
+    <div class="arrow-container">
+        <input class="arrow" id="left_btn" type="button" value="＜">
+        <button class="arrow" id="btn"></button>
+        <input class="arrow" id="right_btn" type="button" value="＞">
+        
+        <table width="40%" order="1">
+            <br>
 
-            店の詳細
-            <table width="70%" order="1">
-                <tr><th>店名</th>           <td id="Shop"><!--ここに店名が追加される--></td></tr> 
-                <tr><th>住所</th>           <td id="Js"><!--ここに住所が追加される--></td></tr>  
-                <tr><th>電話番号</th>       <td id="Nun"><!--ここに電話番号が追加される--></td></tr>  
-                <tr><th>営業時間</th>       <td id="Time"><!--ここに営業時間が追加される--></td></tr>   
-                <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>   
+            <tr><th>店名</th>           <td id="Shop"></td></tr>
+            <tr><th>住所</th>           <td id="Js"></td></tr>
+            <tr><th>電話番号</th>       <td id="Nun"></td></tr>
+            <tr><th>営業時間</th>       <td id="Time"></td></tr>
+            <tr><th>定休日</th><td><span id="Mon">月</span><span id="Tue">火</span><span id="Wed">水</span><span id="Thu">木</span><span id="Fri">金</span><span id="Sat">土</span><span id="Sun">日</span><span id="Hol">祝日</span></td></tr>
 
-            </table>
-            
+        </table>
+
+    </div>
  </body>
  <script>
 
@@ -311,46 +315,5 @@
         }  
     
     }
-
-     //for(a = 0 ; a < name.length; a++){
-       // $("#btn").append('<button id="shop_btn'+a+'" class="shop_btn" onclick="RoadShop()">'+name[a]["ShopName"]+'</button>');    //店ボタンの生成
-
-       // if(name[a]["ShopName"] == null){
-            //$("#btn").append('<div id="nasi">'+'これ以上はありません'+'</div>');
-       // }
-
-       // if(a!=0){
-          //  $("#shop_btn"+a).hide();
-        //}
-   // }
-    
-  // for(b = 0 ; b < name.length; b++){
-        //$("#Shop").append('<td id="Shop_N'+b+'" class="syousai">'+ name[b]["ShopName"]+'</td>');    //テーブル内の店名生成
-        //if(b!=0){
-           // $("#Shop_N"+b).hide();
-        //}
-   // }
-
-   //for(c = 0 ; c < name.length; c++){
-       // $("#Js").append('<td id="Shop_Js'+c+'" class="syousai">'+ name[c]["ShopKen"]+name[c]["ShopShi"]+name[c]["ShopTyo"]+name[c]["ShopBill"]+'</td>');  //テーブル内の住所生成
-        //if(c!=0){
-           // $("#Shop_Js"+c).hide();
-        //}
-    //}
-
-   // for(d = 0 ; d < name.length; d++){
-       // $("#Nun").append('<td id="Shop_Nun'+d+'" class="syousai">'+ name[d]["TelNum"]+'</td>');   //テーブル内の電話番号生成
-        //if(d!=0){
-           // $("#Shop_Nun"+d).hide();
-        //}
-   // }
-
-   
-  // for(e = 0 ; e < name.length; e++){
-        //$("#Time").append('<td id="Shop_Time'+e+'" class="syousai">'+ name[e]["EigyouStart"]+'~'+name[e]["EigyouEnd"]+'</td>');  //テーブル内の営業時間
-        //if(e!=0){
-           // $("#Shop_Time"+e).hide();
-        //}
-   // }
  </script>
 </html>
