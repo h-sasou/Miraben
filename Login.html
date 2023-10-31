@@ -46,12 +46,20 @@
         </label>
 
         <label for="pass">パスワード:
-            <input type="password" id="pass" maxlength="20">
+            <input id="pass"  type="password" ng-model="hankaku" maxlength="20" pattern="^ [a-zA-Z0-9]+$">
         </label>
 
         <p id="err" class="errr"></p>
 
         <input type="button" value="ログイン" id="login">
+
+        <p>
+            新規の方は<a href="sinki.html">こちら</a>
+        </p>
+
+        <p>
+            パスワードを忘れた方は<a href="">こちら</a>     <!--後日追加-->
+        </p>
 
 
         <!--アプリ側更新ポップアップ背景-->
@@ -92,6 +100,7 @@
             }
 
 
+
         //ログイン処理
 
         
@@ -111,8 +120,6 @@
                         for(j=0; j <user.length; ++j){
 
                             if(user_ID == user[j]["UserID"]){  //ユーザーパスワードのチェック
-
-                                let username = user[j]["UserName"];
                                  
                                 let Year =  new Date().getFullYear();
                                 let Month = new Date().getMonth()+ 1;
@@ -122,6 +129,8 @@
                                 let Seconds = new Date().getSeconds();
 
                                 //DB.sql("call UserLogin('"+user_ID+"','"+Year+"-"+Month+"-"+Day+" "+Hours+":"+Minutes+":"+Seconds+"');");
+
+                                let username = user[j]["UserName"];
 
                                 localStorage.setItem("ID_Key",user_ID);
                                 localStorage.setItem("UserName",username);
@@ -146,6 +155,7 @@
 
             };
         });
+
 
 
 
